@@ -19,8 +19,9 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
+        $searchKeyWord = "";
 
-        return view('admin.index', compact(['posts']));
+        return view('admin.index', compact(['posts', 'searchKeyWord']));
     }
 
     /**
@@ -124,5 +125,17 @@ class PostController extends Controller
         $dbs = DB::delete('delete from posts where id in ('.implode(',', $ids).')');
 
         return redirect('admin');
+    }
+    
+    public function search(Request $request)
+    {
+        $searchKeyWord = $request->input('search');
+    
+        $posts = Post::query()
+            ->where('title', 'LIKE', "%{$searchKeyWord}%")
+            ->orWhere('body', 'LIKE', "%{$searchKeyWord}%")
+            ->get();
+    
+        return view('admin.index', compact('posts', 'searchKeyWord'));
     }
 }

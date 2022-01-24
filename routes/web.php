@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +27,8 @@ Route::get('admin/edit/{post_id}', [PostController::class, 'edit'])->name('post.
 Route::put('admin/update/{id}', [PostController::class, 'update'])->name('post.update');
 Route::delete('admin/delete/{id}', [PostController::class, 'destroy'])->name('post.destroy');
 Route::delete('admin/deleteAll', [PostController::class, 'deleteAll'])->name('post.deleteAll');
+Route::get('admin/post/search/', 'PostsController@search')->name('postSearch');
+
+Route::get('admin/user/search/', 'UserController@search')->name('userSearch');
+
+Route::get('admin/category/search/', 'CategoryController@search')->name('categorySearch');
