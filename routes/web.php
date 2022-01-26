@@ -1,6 +1,9 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\LanguageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -9,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| contains the 'web' middleware group. Now create something great!
 |
 */
 
@@ -17,49 +20,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('lang/{lang}', [
-    'as' => 'lang.switch',
-    'uses' => 'App\Http\Controllers\LanguageController@switchLang']);
+Route::get('/admin', 'Admin\PostController@index')->name('post.index');
+Route::get('admin/create/', 'Admin\PostController@create')->name('post.create');
+Route::post('admin/store', 'Admin\PostController@store')->name('post.store');
+Route::get('admin/show/{id}', 'Admin\PostController@show')->name('post.show');
+Route::get('admin/edit/{post_id}', 'Admin\PostController@edit')->name('post.edit');
+Route::put('admin/update/{id}', 'Admin\PostController@update')->name('post.update');
+Route::delete('admin/delete/{id}', 'Admin\PostController@destroy')->name('post.destroy');
+Route::delete('admin/deleteAll', 'Admin\PostController@deleteAll')->name('post.deleteAll');
+Route::get('admin/post/search/', 'Admin\PostController@search')->name('post.search');
 
-// ==================================== ADMIN ====================================
-$path_to_admin_controllers = '\App\Http\Controllers\Admin\AdminController@';
-$prefix_admin = 'admin';
-Route::prefix($prefix_admin)->group(function () use ($path_to_admin_controllers) {
-    // -------------------------------- DASHBOARD --------------------------------
-    Route::get("/dashboard", [
-        "as" => 'admin.dashboard',
-        "uses" => $path_to_admin_controllers . 'dashboard'
-    ]);
-    Route::get("/view_profile", [
-        "as" => 'admin.view_profile',
-        "uses" => $path_to_admin_controllers . 'viewProfile'
-    ]);
-    Route::get("/add_user", [
-        "as" => 'admin.add_user',
-        "uses" => $path_to_admin_controllers . 'addUser'
-    ]);
-    Route::get("/edit_user", [
-        "as" => 'admin.edit_user',
-        "uses" => $path_to_admin_controllers . 'editUser'
-    ]);
-    Route::get("/search_user", [
-        "as" => 'admin.search_user',
-        "uses" => $path_to_admin_controllers . 'searchUser'
-    ]);
-    Route::get("/add_category", [
-        "as" => 'admin.add_category',
-        "uses" => $path_to_admin_controllers . 'addCategory'
-    ]);
-    Route::get("/search_category", [
-        "as" => 'admin.search_category',
-        "uses" => $path_to_admin_controllers . 'searchCategory'
-    ]);
-    Route::get("/add_post", [
-        "as" => 'admin.add_post',
-        "uses" => $path_to_admin_controllers . 'addPost'
-    ]);
-    Route::get("/search_post", [
-        "as" => 'admin.search_post',
-        "uses" => $path_to_admin_controllers . 'searchPost'
-    ]);
-});
+Route::get('admin/user', 'Admin\UserController@index')->name('user.index');
+Route::get('admin/user/create/', 'Admin\UserController@create')->name('user.create');
+Route::post('admin/user/store', 'Admin\UserController@store')->name('user.store');
+Route::get('admin/user/show/{id}', 'Admin\UserController@show')->name('user.show');
+Route::get('admin/user/edit/{post_id}', 'Admin\UserController@edit')->name('user.edit');
+Route::put('admin/user/update/{id}', 'Admin\UserController@update')->name('user.update');
+Route::delete('admin/user/delete/{id}', 'Admin\UserController@destroy')->name('user.destroy');
+Route::delete('admin/user/deleteAll', 'Admin\UserController@deleteAll')->name('user.deleteAll');
+Route::get('admin/user/search/', 'Admin\UserController@search')->name('user.search');
+
+Route::get('admin/category', 'Admin\CategoryController@index')->name('category.index');
+Route::get('admin/category/create/', 'Admin\CategoryController@create')->name('category.create');
+Route::post('admin/category/store', 'Admin\CategoryController@store')->name('category.store');
+Route::get('admin/category/show/{id}', 'Admin\CategoryController@show')->name('category.show');
+Route::get('admin/category/edit/{post_id}', 'Admin\CategoryController@edit')->name('category.edit');
+Route::put('admin/category/update/{id}', 'Admin\CategoryController@update')->name('category.update');
+Route::delete('admin/category/delete/{id}', 'Admin\CategoryController@destroy')->name('category.destroy');
+Route::delete('admin/category/deleteAll', 'Admin\CategoryController@deleteAll')->name('category.deleteAll');
+Route::get('admin/category/search/', 'Admin\CategoryController@search')->name('category.search');
