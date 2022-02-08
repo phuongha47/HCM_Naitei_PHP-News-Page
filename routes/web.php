@@ -4,6 +4,11 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\Users\HomeController;
+use App\Http\Controllers\Users\UserPostController;
+use App\Http\Controllers\Users\UserCategoryController;
+
+// use App\Http\Controllers\Users\UserPostController as ;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +47,7 @@ Route::get('admin/user/search/', 'Admin\UserController@search')->name('user.sear
 
 Route::get('admin/category', 'Admin\CategoryController@index')->name('category.index');
 Route::get('admin/category/create/', 'Admin\CategoryController@create')->name('category.create');
+Route::get('/admin/categorySub', 'Admin\CategoryController@createSubCategory')->name('categorysub.create');
 Route::post('admin/category/store', 'Admin\CategoryController@store')->name('category.store');
 Route::get('admin/category/show/{id}', 'Admin\CategoryController@show')->name('category.show');
 Route::get('admin/category/edit/{post_id}', 'Admin\CategoryController@edit')->name('category.edit');
@@ -49,3 +55,8 @@ Route::put('admin/category/update/{id}', 'Admin\CategoryController@update')->nam
 Route::delete('admin/category/delete/{id}', 'Admin\CategoryController@destroy')->name('category.destroy');
 Route::delete('admin/category/deleteAll', 'Admin\CategoryController@deleteAll')->name('category.deleteAll');
 Route::get('admin/category/search/', 'Admin\CategoryController@search')->name('category.search');
+
+Route::get('lang/{lang}', [
+    'as' => 'lang.switch',
+    'uses' => 'LanguageController@switchLang'
+]);
