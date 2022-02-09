@@ -13,10 +13,9 @@ use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
-    protected $controller_name = 'admin';
+    protected $controllerName = 'admin';
     protected $pathToView = 'admin.pages.';
-    protected $path_to_ui = 'ui_resources/startbootstrap-sb-admin-2/';
-    protected $imgPosts;
+    protected $pathToUi = 'ui_resources/startbootstrap-sb-admin-2/';
     /**
      * Display a listing of the resource.
      *
@@ -25,15 +24,14 @@ class PostController extends Controller
     public function __construct()
     {
         // Var want to share
-        view()->share('controller_name', $this->controller_name);
-        view()->share('path_to_ui', $this->path_to_ui);
+        view()->share('controllerName', $this->controllerName);
+        view()->share('pathToUi', $this->pathToUi);
         $this->limit = config('app.limit');
-        $this->imgPosts = Image::where('imageable_type', Post::class)->get();
     }
     public function index()
     {
         $posts = Post::first();
-        $posts = $posts->load('images')->orderBy('created_at', 'DESC')->paginate($this->limit);
+        $posts = $posts->load('images')->paginate($this->limit);
 
         return view($this->pathToView . 'listPost', array_merge(compact('posts'), ['searchKeyWord' => $this->searchKeyWord]));
     }
@@ -45,9 +43,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories_sub = DB::table('categories')->select('*')->where('parent_id', '>', '0')->get();
+        $categoriesSub = DB::table('categories')->select('*')->where('parent_id', '>', '0')->get();
 
-        return view($this->pathToView . 'addPost', compact(['categories_sub']));
+
+        return view($this->pathToView . 'addPost', compact(['categoriesSub']));
     }
 
     /**
@@ -87,7 +86,7 @@ class PostController extends Controller
     {
         $image_post = Post::findOrFail($id)->load('images');
 
-        return view($this->pathToView . 'detailPostAdmin', array_merge(compact('image_post'), ['imgPosts' => $this->imgPosts]));
+        return view($this->pathToView . 'detailPostAdmin', compact(['image_post']));
     }
 
     /**
