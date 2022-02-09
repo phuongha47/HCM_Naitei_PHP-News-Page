@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AddCategoryRequest;
+use App\Http\Requests\AddSubCategoryRequest;
 use App\Http\Requests\EditCategoryRequest;
-use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
-    private $controller_name = 'admin';
-    protected $path_to_view = 'admin.pages.';
-    private $path_to_ui = 'ui_resources/startbootstrap-sb-admin-2/';
-    protected $limit;
+    private $controllerName = 'admin';
+    protected $pathToView = 'admin.pages.';
+    private $pathToUi = 'ui_resources/startbootstrap-sb-admin-2/';
 
     public function __construct()
     {
         // Var want to share
-        view()->share('controller_name', $this->controller_name);
-        view()->share('path_to_ui', $this->path_to_ui);
+        view()->share('controllerName', $this->controllerName);
+        view()->share('pathToUi', $this->pathToUi);
+        $this->limit = config('app.limit');
     }
     /**
      * Display a listing of the resource.
@@ -31,11 +32,17 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::first();
-        $this->limit = config('app.limit');
         $categories = $categories->load('posts')->paginate($this->limit);
-        $searchKeyWord = "";
 
-        return view($this->path_to_view . 'listCategory', compact(['categories', 'searchKeyWord']));
+        return view(
+            $this->pathToView . 'listCategory',
+            array_merge(
+                compact('categories'),
+                [
+                    'searchKeyWord' => $this->searchKeyWord,
+                ]
+            )
+        );
     }
 
     /**
@@ -43,9 +50,27 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function createSubCategory()
+    {
+        $categoriesSub = DB::table('categories')
+            ->select('*')
+            ->where('parent_id', '>', '1')
+            ->get();
+
+        return view($this->pathToView . 'addSubCategory', compact(['categoriesSub']));
+    }
+
+    public function storeSubCategory(AddSubCategoryRequest $request)
+    {
+        $Category = Category::create($request->all());
+
+        return redirect()->route('category.index');
+    }
+
     public function create()
     {
-        return view($this->path_to_view . 'addCategory');
+
+        return view($this->pathToView . 'addCategory');
     }
 
     /**
@@ -82,7 +107,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        return view($this->path_to_view . 'editCategory', compact(['category']));
+        return view($this->pathToView . 'editCategory', compact(['category']));
     }
 
     /**
@@ -117,11 +142,10 @@ class CategoryController extends Controller
     public function search(Request $request)
     {
         $searchKeyWord = $request->input('search');
-        $this->limit = config('app.limit');
         $categories = Category::where('name', 'LIKE', "%{$searchKeyWord}%")
             ->orderBy('id', 'DESC')
             ->paginate($this->limit);
 
-        return view($this->path_to_view . 'listCategory', compact('categories', 'searchKeyWord'));
+        return view($this->pathToView . 'listCategory', compact('categories', 'searchKeyWord'));
     }
 }

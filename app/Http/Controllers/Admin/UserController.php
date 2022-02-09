@@ -13,17 +13,35 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    private $controllerName = 'admin';
+    protected $pathToView = 'admin.pages.';
+    private $pathToUi = 'ui_resources/startbootstrap-sb-admin-2/';
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        // Var want to share
+        view()->share('controllerName', $this->controllerName);
+        view()->share('pathToUi', $this->pathToUi);
+        $this->limit = config('app.limit');
+    }
     public function index()
     {
-        $users = User::all();
-        $searchKeyWord = "";
+        $users = User::first();
+        $users = $users->load('role')->paginate($this->limit);
 
-        return view($this->path_to_view . 'listUser', compact(['users', 'searchKeyWord']));
+        return view(
+            $this->pathToView . 'listUser',
+            array_merge(
+                compact('users'),
+                [
+                    'searchKeyWord' => $this->searchKeyWord,
+                ]
+            )
+        );
     }
 
     /**
@@ -33,7 +51,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view($this->path_to_view . 'addUser');
+        return view($this->pathToView . 'addUser');
     }
 
     /**
@@ -45,11 +63,13 @@ class UserController extends Controller
     public function store(UserAddRequest $request)
     {
         $password = Hash::make($request->password);
-        $user = User::create([
+        $user = User::create(
+            [
             'name' => $request->name,
             'password' => $password,
             'role_id' => $request->role_id,
-        ]);
+            ]
+        );
         
         return redirect()->route('user.index');
     }
@@ -75,7 +95,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return view($this->path_to_view . 'editUser', compact(['user']));
+        return view($this->pathToView . 'editUser', compact(['user']));
     }
 
     /**
@@ -117,8 +137,9 @@ class UserController extends Controller
         $searchKeyWord = $request->input('search');
         $users = User::where('name', 'LIKE', "%{$searchKeyWord}%")
             ->orWhere('email', 'LIKE', "%{$searchKeyWord}%")
-            ->get();
+            ->orderBy('id', 'DESC')
+            ->paginate($this->limit);
             
-        return view($this->path_to_view . 'listUser', compact('users', 'searchKeyWord'));
+        return view($this->pathToView . 'listUser', compact('users', 'searchKeyWord'));
     }
 }
