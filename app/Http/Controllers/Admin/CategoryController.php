@@ -54,7 +54,7 @@ class CategoryController extends Controller
     {
         $categoriesSub = DB::table('categories')
             ->select('*')
-            ->where('parent_id', '>', '1')
+            ->whereNull('parent_id')
             ->get();
 
         return view($this->pathToView . 'addSubCategory', compact(['categoriesSub']));
@@ -108,7 +108,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $categoriesSub = DB::table('categories')
                     ->select('*')
-                    ->where('parent_id', '>', '1')
+                    ->whereNull('parent_id')
                     ->get();
                     
         return view($this->pathToView . 'editCategory', compact(['category', 'categoriesSub']));
