@@ -18,6 +18,7 @@ class CategoryController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth');
         // Var want to share
         view()->share('controllerName', $this->controllerName);
         view()->share('pathToUi', $this->pathToUi);
@@ -121,7 +122,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->update($request->all());
-       
+
         return redirect()->route('category.index');
     }
 
