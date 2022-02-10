@@ -1,14 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\Users\HomeController;
-use App\Http\Controllers\Users\UserPostController;
-use App\Http\Controllers\Users\UserCategoryController;
-
-// use App\Http\Controllers\Users\UserPostController as ;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +13,21 @@ use App\Http\Controllers\Users\UserCategoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'App\Http\Controllers\Users\HomeController@show')->name('home.index');
+Route::get('/show/{id}', 'App\Http\Controllers\Users\HomeController@show')->name('home.category');
+Route::get('/search', 'App\Http\Controllers\Users\HomeController@search')->name('home.search');
 
-Route::get('/admin', 'Admin\PostController@index')->name('post.index');
+Route::get('/category/show/{id}', 'App\Http\Controllers\Users\UserCategoryController@showSubCategories')
+    ->name('userCategory.show');
+Route::get('/category/showCategory/{id}', 'App\Http\Controllers\Users\UserCategoryController@showCategories')
+    ->name('userCategory.showCategory');
+
+Route::get('/show/{id}', 'App\Http\Controllers\Users\App\Http\Controllers\Users\UserPostController@show')
+    ->name('userPost.show');
+
+Route::get('/admin', 'Admin\AdminController@index')->name('admin.index');
+
+Route::get('/admin/post', 'Admin\PostController@index')->name('post.index');
 Route::get('admin/create/', 'Admin\PostController@create')->name('post.create');
 Route::post('admin/store', 'Admin\PostController@store')->name('post.store');
 Route::get('admin/show/{id}', 'Admin\PostController@show')->name('post.show');
