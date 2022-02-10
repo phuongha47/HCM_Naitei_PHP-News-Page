@@ -24,6 +24,7 @@ class PostController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
         // Var want to share
         view()->share('controller_name', $this->controller_name);
         view()->share('pathToUi', $this->pathToUi);
