@@ -33,7 +33,15 @@ class UserController extends Controller
         $users = User::first();
         $users = $users->load('role')->paginate($this->limit);
 
-        return view($this->pathToView . 'listUser', array_merge(compact('users'), ['searchKeyWord' => $this->searchKeyWord]));
+        return view(
+            $this->pathToView . 'listUser',
+            array_merge(
+                compact('users'),
+                [
+                    'searchKeyWord' => $this->searchKeyWord,
+                ]
+            )
+        );
     }
 
     /**

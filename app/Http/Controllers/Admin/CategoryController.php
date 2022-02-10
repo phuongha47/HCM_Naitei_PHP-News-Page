@@ -34,12 +34,15 @@ class CategoryController extends Controller
         $categories = Category::first();
         $categories = $categories->load('posts')->paginate($this->limit);
 
-        return view($this->pathToView . 'listCategory',
-            array_merge(compact('categories'),
-            [
-                'searchKeyWord' => $this->searchKeyWord,
-            ]
-        ));
+        return view(
+            $this->pathToView . 'listCategory',
+            array_merge(
+                compact('categories'),
+                [
+                    'searchKeyWord' => $this->searchKeyWord,
+                ]
+            )
+        );
     }
 
     /**
