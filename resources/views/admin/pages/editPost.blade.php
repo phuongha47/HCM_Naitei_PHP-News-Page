@@ -1,6 +1,18 @@
 @extends('admin.master_layout')
 
 @section('pageTitle', 'Edit Post')
+
+<head>
+    <meta charset="UTF-8">
+    <script src={{ asset("/resouce/summernote-main/summernote-main/jquery-3.5.1.min.js") }}></script>
+    <script src={{ asset("/resouce/summernote-main/summernote-main/popper.min.js") }}></script>
+
+    <link rel="stylesheet" href={{ asset("/resouce/summernote-main/summernote-main/bootstrap.min.css" ) }}>
+    <script src={{ asset("/resouce/summernote-main/summernote-main/bootstrap.min.js" ) }}></script>
+
+    <link href={{ asset("/resouce/summernote-main/summernote-main/summernote-bs4.min.css") }} rel="stylesheet">
+    <script src={{ asset("/resouce/summernote-main/summernote-main/summernote-bs4.min.js") }}></script>
+</head>
 @section('content')
 <div class="container-fluid">
 
@@ -33,11 +45,11 @@
                                             <input cols="30" type="text" name="title" class="form-control"
                                                 value="{{ $post->title }}">
                                         </div>
-                                        <div class="mb-3 form-group">
+                                        <div class="form-group">
                                             <label class="control-label"
                                                 for="content"><b>{{ __('messages.content') }}</b></label>
-                                            <input cols="30" rows="10" type="text" name="body" class="form-control"
-                                                value="{{ $post->body }}"></input>
+                                            <textarea class="form-control" name="body"
+                                                id="summernote">{{ $post->body }}</textarea>
                                         </div>
                                         <label for=""><b>{{ __('messages.selectCategory') }}</b></label>
                                         <select name="category_name" class="form-control" id="sel1">
@@ -77,4 +89,8 @@
     </div>
     @endif
 </div>
+<!-- partial:index.partial.html -->
+<!-- partial -->
+<script type="text/javascript" src={{ asset("/resouce/summernote-main/summernote-main/script.js") }}></script>
+
 @endsection

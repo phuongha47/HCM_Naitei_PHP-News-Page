@@ -15,15 +15,14 @@
                     @foreach($imgPosts as $img)
                     @if ($img->imageable_id == $post->id)
                     <a href="{{ route('userPost.show', $post->id) }}">
-                        <div class="thumbnail"><img style="width:150px; height:150px"
-                                src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
+                        <div class="thumbnail"><img src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
                     </a>
                     @endif
                     @endforeach
                     <div class="ml-3 contents">
                         <h2><a href="{{ route('userPost.show', $post->id) }}">{{ $post->title }}</a></h2>
                         <p class="mb-3">
-                            {{ \Illuminate\Support\Str::limit(strip_tags($post->body), 100, $end='...')}}</p>
+                            {{ \Illuminate\Support\Str::limit(strip_tags($post->body), $maxBody, $end='...')}}</p>
                     </div>
                 </div>
                 @endforeach
@@ -44,14 +43,13 @@
                     @foreach($imgPosts as $img)
                     @if ($img->imageable_id == $post->id)
                     <a href="{{ route('userPost.show', $post->id) }}">
-                        <div class="thumbnail"><img style="width:150px" src="{{ url('storage/images/'.$img->link) }}"
-                                alt=""></div>
+                        <div class="thumbnail"><img src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
                     </a>
                     @endif
                     @endforeach
                     <div class="ml-3 contents">
                         <h2><a href="{{ route('userPost.show', $post->id) }}">{{ $post->title }}</a></h2>
-                        <p class="mb-3">{{ \Illuminate\Support\Str::limit($post->body, 250, $end='...') }}</p>
+                        <p class="mb-3">{{ \Illuminate\Support\Str::limit($post->body, $maxBody, $end='...') }}</p>
                     </div>
                 </div>
                 @endforeach
@@ -76,14 +74,14 @@
                             @foreach($imgPosts as $img)
                             @if ($img->imageable_id == $post->id)
                             <a href="{{ route('userPost.show', $post->id) }}">
-                                <div class="thumbnail"><img style="width:150px"
-                                        src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
+                                <div class="thumbnail"><img src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
                             </a>
                             @endif
                             @endforeach
                             <div class="ml-3 contents">
                                 <h2><a href="{{ route('userPost.show', $post->id) }}">{{ $post->title }}</a></h2>
-                                <p class="mb-3">{{ \Illuminate\Support\Str::limit($post->body, 250, $end='...') }}</p>
+                                <p class="mb-3">{{ \Illuminate\Support\Str::limit($post->body, $maxBody, $end='...') }}
+                                </p>
                             </div>
                         </div>
                         @endforeach
@@ -104,14 +102,14 @@
                             @foreach($imgPosts as $img)
                             @if ($img->imageable_id == $post->id)
                             <a href="{{ route('userPost.show', $post->id) }}">
-                                <div class="thumbnail"><img style="width:150px"
-                                        src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
+                                <div class="thumbnail"><img src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
                             </a>
                             @endif
                             @endforeach
                             <div class="ml-3 contents">
                                 <h2><a href="{{ route('userPost.show', $post->id) }}">{{ $post->title }}</a></h2>
-                                <p class="mb-3">{{ \Illuminate\Support\Str::limit($post->body, 250, $end='...') }}</p>
+                                <p class="mb-3">{{ \Illuminate\Support\Str::limit($post->body, $maxBody, $end='...') }}
+                                </p>
                             </div>
                         </div>
                         @endforeach
@@ -136,7 +134,7 @@
                                 <div class="post-entry-2 d-flex">
                                     @foreach($imgPosts as $img)
                                     @if ($img->imageable_id == $post->id)
-                                    <a href="{{ route('userPost.show', $post->id) }}"><img style="width:150px"
+                                    <a href="{{ route('userPost.show', $post->id) }}"><img
                                             src="{{ url('storage/images/'.$img->link) }}" alt=""></a>
                                     @endif
                                     @endforeach
@@ -144,7 +142,7 @@
                                         <h2><a href="{{ route('userPost.show', $post->id) }}">{{ $post->title }}</a>
                                         </h2>
                                         <p class="mb-3">
-                                            {{ \Illuminate\Support\Str::limit($post->body, 250, $end='...') }}</p>
+                                            {{ \Illuminate\Support\Str::limit($post->body, $maxBody, $end='...') }}</p>
                                     </div>
                                 </div>
                                 @endforeach
@@ -166,7 +164,7 @@
                                     <div class="trend-contents">
                                         @foreach($imgPosts as $img)
                                         @if ($img->imageable_id == $post->id)
-                                        <a href="{{ route('userPost.show', $post->id) }}"><img style="width:90%"
+                                        <a href="{{ route('userPost.show', $post->id) }}"><img
                                                 src="{{ url('storage/images/'.$img->link) }}" alt=""></a>
                                         @endif
                                         @endforeach
@@ -216,32 +214,4 @@
 </div>
 <!-- .site-wrap -->
 
-
-<!-- loader -->
-<div id="loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-            stroke="#ff5e15" />
-    </svg></div>
-
-<script src="resouce/meranda-master/js/jquery-3.3.1.min.js"></script>
-<script src="resouce/meranda-master/js/jquery-migrate-3.0.1.min.js"></script>
-<script src="resouce/meranda-master/js/jquery-ui.js"></script>
-<script src="resouce/meranda-master/js/popper.min.js"></script>
-<script src="resouce/meranda-master/js/bootstrap.min.js"></script>
-<script src="resouce/meranda-master/js/owl.carousel.min.js"></script>
-<script src="resouce/meranda-master/js/jquery.stellar.min.js"></script>
-<script src="resouce/meranda-master/js/jquery.countdown.min.js"></script>
-<script src="resouce/meranda-master/js/bootstrap-datepicker.min.js"></script>
-<script src="resouce/meranda-master/js/jquery.easing.1.3.js"></script>
-<script src="resouce/meranda-master/js/aos.js"></script>
-<script src="resouce/meranda-master/js/jquery.fancybox.min.js"></script>
-<script src="resouce/meranda-master/js/jquery.sticky.js"></script>
-<script src="resouce/meranda-master/js/jquery.mb.YTPlayer.min.js"></script>
-
-<script src="resouce/meranda-master/js/main.js"></script>
-
-</body>
-
-</html>
 @endsection

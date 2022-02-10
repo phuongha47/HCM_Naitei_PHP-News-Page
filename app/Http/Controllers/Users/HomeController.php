@@ -15,6 +15,7 @@ class HomeController extends Controller
     protected $imgPosts;
     protected $categoriesWithChildren;
     protected $limit;
+    protected $maxBody;
 
 
     /**
@@ -27,6 +28,7 @@ class HomeController extends Controller
         $this->limit = config('app.limit');
         $this->imgPosts = Image::where('imageable_type', Post::class)->get();
         $this->categoriesWithChildren = Category::with('children')->whereNull('parent_id')->get();
+        $this->maxBody = config('model.posts.maxBody');
     }
 
     /**
@@ -112,6 +114,7 @@ class HomeController extends Controller
                     'searchKeyWord' => $this->searchKeyWord,
                     'imgPosts' => $this->imgPosts,
                     'categoriesWithChildren' => $this->categoriesWithChildren,
+                    'maxBody' => $this->maxBody,
                 ]
             )
         );
