@@ -25,7 +25,7 @@ class AddSubCategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|max:50|unique:categories|regex:/^([a-zA-Z]+)(\s[a-zA-Z]+)*$/',
-            'parent_id' => 'required|exists:mysql.catgories,id',
+            'parent_id' => 'required|exists:mysql.categories,id',
         ];
     }
 }

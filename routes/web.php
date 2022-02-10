@@ -52,6 +52,7 @@ Route::get('admin/category', 'Admin\CategoryController@index')->name('category.i
 Route::get('admin/category/create/', 'Admin\CategoryController@create')->name('category.create');
 Route::get('/admin/categorySub', 'Admin\CategoryController@createSubCategory')->name('categorysub.create');
 Route::post('admin/category/store', 'Admin\CategoryController@store')->name('category.store');
+Route::post('admin/subCategory/store', 'Admin\CategoryController@storeSubCategory')->name('category.storeSubCategory');
 Route::get('admin/category/show/{id}', 'Admin\CategoryController@show')->name('category.show');
 Route::get('admin/category/edit/{post_id}', 'Admin\CategoryController@edit')->name('category.edit');
 Route::put('admin/category/update/{id}', 'Admin\CategoryController@update')->name('category.update');
