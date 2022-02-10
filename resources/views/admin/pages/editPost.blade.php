@@ -89,8 +89,6 @@
     </div>
     @endif
 </div>
-<!-- partial:index.partial.html -->
-<!-- partial -->
 <script type="text/javascript" src={{ asset("/resouce/summernote-main/summernote-main/script.js") }}></script>
 
 @endsection
