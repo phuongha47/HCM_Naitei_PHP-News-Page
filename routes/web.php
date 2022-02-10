@@ -1,13 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\Users\HomeController;
-use App\Http\Controllers\Users\UserPostController;
-use App\Http\Controllers\Users\UserCategoryController;
-use App\Http\Controllers\Users\CommentController;
+use App\Http\Controllers\Users;
 
 // use App\Http\Controllers\Users\UserPostController as ;
 
