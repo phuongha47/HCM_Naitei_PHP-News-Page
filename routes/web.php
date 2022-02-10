@@ -17,12 +17,29 @@ Route::get('lang/{lang}', [
     'uses' => 'LanguageController@switchLang',
 ]);
 
-Auth::routes();
+Route::get('/', 'App\Http\Controllers\Users\HomeController@show')->name('home.index');
+Route::get('/show/{id}', 'App\Http\Controllers\Users\HomeController@show')->name('home.category');
+Route::get('/search', 'App\Http\Controllers\Users\HomeController@search')->name('home.search');
 
-$userHomeController = 'App\Http\Controllers\Users\HomeController@';
-Route::get('/', $userHomeController . 'show')->name('home.index');
-Route::get('/show/{id}', $userHomeController . 'show')->name('home.category');
-Route::get('/search', $userHomeController . 'search')->name('home.search');
+Route::get('/category/show/{id}', 'App\Http\Controllers\Users\UserCategoryController@showSubCategories')
+    ->name('userCategory.show');
+Route::get('/category/showCategory/{id}', 'App\Http\Controllers\Users\UserCategoryController@showCategories')
+    ->name('userCategory.showCategory');
+
+Route::get('/show/{id}', 'App\Http\Controllers\Users\App\Http\Controllers\Users\UserPostController@show')
+    ->name('userPost.show');
+
+Route::get('/admin', 'Admin\AdminController@index')->name('admin.index');
+
+Route::get('/admin/post', 'Admin\PostController@index')->name('post.index');
+Route::get('admin/create/', 'Admin\PostController@create')->name('post.create');
+Route::post('admin/store', 'Admin\PostController@store')->name('post.store');
+Route::get('admin/show/{id}', 'Admin\PostController@show')->name('post.show');
+Route::get('admin/edit/{post_id}', 'Admin\PostController@edit')->name('post.edit');
+Route::put('admin/update/{id}', 'Admin\PostController@update')->name('post.update');
+Route::delete('admin/delete/{id}', 'Admin\PostController@destroy')->name('post.destroy');
+Route::delete('admin/deleteAll', 'Admin\PostController@deleteAll')->name('post.deleteAll');
+Route::get('admin/post/search/', 'Admin\PostController@search')->name('post.search');
 
 $userCategoryController = 'App\Http\Controllers\Users\UserCategoryController@';
 Route::get('/category/show/{id}', $userCategoryController . 'show')->name('userCategory.show');
