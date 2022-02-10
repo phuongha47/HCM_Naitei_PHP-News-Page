@@ -106,8 +106,12 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::findOrFail($id);
-
-        return view($this->pathToView . 'editCategory', compact(['category']));
+        $categoriesSub = DB::table('categories')
+                    ->select('*')
+                    ->where('parent_id', '>', '1')
+                    ->get();
+                    
+        return view($this->pathToView . 'editCategory', compact(['category', 'categoriesSub']));
     }
 
     /**
