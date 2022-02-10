@@ -34,7 +34,7 @@
                                             <input cols="30" type="text" name="name" class="form-control">
                                         </div>
                                         <select name="parent_id" class="form-control" id="sel1">
-                                            @foreach ($categories_sub as $sub)
+                                            @foreach ($categoriesSub as $sub)
                                             <option value="{{ $sub->id }}">{{ $sub->name }}</option>
                                             @endforeach
                                         </select>

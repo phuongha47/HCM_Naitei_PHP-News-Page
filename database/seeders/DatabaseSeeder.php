@@ -280,23 +280,23 @@ class DatabaseSeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i'),
             ]);
         }
-        for ($i = 44; $i < 47; $i++){
-            DB::table('posts')->insert([
-                'title' => "violences",
-                'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
+        // for ($i = 44; $i < 47; $i++){
+        //     DB::table('posts')->insert([
+        //         'title' => "violences",
+        //         'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
 
-                The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
-                The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
-                'category_id' => "14",
-                'author_id' => "2",
-                'created_at' => Carbon::now()->format('Y-m-d H:i'),
-            ]);
-        }
-        for ($i = 1; $i < 50; $i++){
+        //         The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
+        //         The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
+        //         'category_id' => "14",
+        //         'author_id' => "2",
+        //         'created_at' => Carbon::now()->format('Y-m-d H:i'),
+        //     ]);
+        // }
+        for ($i = 1; $i < 42; $i++){
             DB::table('images')->insert([
                 'imageable_type' => "App\Models\Post",
                 'imageable_id' => $i,
-                'link' => '\img\anh-meo-cute-nhat-9.jpg',
+                'link' => '1644385778.jpg',
                 'created_at' => Carbon::now()->format('Y-m-d H:i'),
             ]);
         }

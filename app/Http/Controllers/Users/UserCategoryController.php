@@ -67,7 +67,7 @@ class UserCategoryController extends Controller
         $category = Category::findOrFail($id);
         //posts
         $posts = $category->posts()->paginate($this->limit);
-        if (isNull($category->posts()->get())){
+        if (count($category->posts()->get())<1){
             
             return view(
                 $this->pathToView . 'emptyContent',

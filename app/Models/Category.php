@@ -17,7 +17,36 @@ class Category extends Model
         return $this->hasMany(Post::class);
     }
 
-    public function children(){
+    public function children()
+    {
         return $this->hasMany(Category::class , 'parent_id');
+    }
+    public function parent()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function getParentsNames()
+    {
+        if ($this->parent) {
+            return $this->parent->getParentsNames() . " > " . $this->name;
+        }
+        else {
+            return $this->name;
+        }
+    }
+
+    public function getParentsAttribute()
+    {
+        $parents = collect([]);
+
+        $parent = $this->parent;
+
+        while (!is_null($parent)) {
+            $parents->push($parent);
+            $parent = $parent->parent;
+        }
+
+        return $parents;
     }
 }

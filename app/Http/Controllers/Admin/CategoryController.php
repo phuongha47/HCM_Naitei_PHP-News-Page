@@ -12,15 +12,15 @@ use App\Http\Requests\EditCategoryRequest;
 
 class CategoryController extends Controller
 {
-    private $controller_name = 'admin';
+    private $controllerName = 'admin';
     protected $pathToView = 'admin.pages.';
-    private $path_to_ui = 'ui_resources/startbootstrap-sb-admin-2/';
+    private $pathToUi = 'ui_resources/startbootstrap-sb-admin-2/';
 
     public function __construct()
     {
         // Var want to share
-        view()->share('controller_name', $this->controller_name);
-        view()->share('path_to_ui', $this->path_to_ui);
+        view()->share('controllerName', $this->controllerName);
+        view()->share('pathToUi', $this->pathToUi);
         $this->limit = config('app.limit');
     }
     /**
@@ -34,7 +34,12 @@ class CategoryController extends Controller
         $categories = Category::first();
         $categories = $categories->load('posts')->paginate($this->limit);
 
-        return view($this->pathToView . 'listCategory', array_merge(compact('categories'), ['searchKeyWord' => $this->searchKeyWord]));
+        return view($this->pathToView . 'listCategory',
+            array_merge(compact('categories'),
+            [
+                'searchKeyWord' => $this->searchKeyWord,
+            ]
+        ));
     }
 
     /**
@@ -44,9 +49,12 @@ class CategoryController extends Controller
      */
     public function createSubCategory()
     {
-        $categories_sub = DB::table('categories')->select('*')->whereNull('parent_id')->get();
+        $categoriesSub = DB::table('categories')
+            ->select('*')
+            ->where('parent_id', '>', '1')
+            ->get();
 
-        return view($this->pathToView . 'addSubCategory', compact(['categories_sub']));
+        return view($this->pathToView . 'addSubCategory', compact(['categoriesSub']));
     }
 
     public function storeSubCategory(AddSubCategoryRequest $request)

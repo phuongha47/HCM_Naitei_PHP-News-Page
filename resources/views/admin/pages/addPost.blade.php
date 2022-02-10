@@ -52,7 +52,7 @@
                                         </div>
                                         <label for=""><b>{{ __('messages.selectCategory') }}</b></label>
                                         <select name="category_id" class="form-control" id="sel1">
-                                            @foreach ($categories_sub as $category)
+                                            @foreach ($categoriesSub as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>

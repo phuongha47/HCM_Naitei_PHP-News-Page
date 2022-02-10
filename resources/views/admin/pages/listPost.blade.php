@@ -61,7 +61,7 @@
                                             </td>
                                             <td class="col-3">
                                                 <li class="list-inline-item">
-                                                    <a href="{{ route('post.show', $post->id) }}"
+                                                    <a href="{{ route('userPost.show', $post->id) }}"
                                                         class="btn btn-primary btn-sm mb-2">{{ __('messages.view') }}</i></a>
                                                     <br>
                                                     <a href="{{ route('post.edit', $post->id) }}"

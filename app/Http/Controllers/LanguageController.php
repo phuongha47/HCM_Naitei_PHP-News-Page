@@ -11,7 +11,7 @@ class LanguageController extends Controller
 {
     protected $controller_name = 'admin';
     protected $pathToView = 'admin.pages.';
-    protected $path_to_ui = 'ui_resources/startbootstrap-sb-admin-2/';
+    protected $pathToUi = 'ui_resources/startbootstrap-sb-admin-2/';
     public function switchLang($lang)
      {
          if (array_key_exists($lang, Config::get('languages'))) {

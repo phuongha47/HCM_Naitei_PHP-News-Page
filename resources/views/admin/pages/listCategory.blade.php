@@ -48,9 +48,10 @@
                                     <td> {{ $loop->index }} </td>
                                     <td class="col-4 text-left"> {{ $category->name }} </td>
                                     @if($category->parent_id == 0)
-                                    <td class="col-5">Null</td>
+                                    <td class="">Null</td>
                                     @else
-                                    <td class="col-3 text-left">category</td>
+                                    <td class="col-3 text-left">{{ $category->getParentsNames() }}
+                                    </td>
                                     @endif
                                     <!-- <td class="text-center col-25">{{ $category->posts->count() }}</td> -->
                                     <td class="col-3">

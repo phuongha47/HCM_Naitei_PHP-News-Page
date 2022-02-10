@@ -62,7 +62,7 @@ class HomeController extends Controller
         $max = config('model.posts.maxDisplay');
         $min = config('model.posts.minDisplay');
         //Lastest news
-        $latestPosts = Post::orderBy('created_at', 'desc')->take(5)->get();
+        $latestPosts = Post::orderBy('created_at', 'desc')->take(3)->get();
         //World news
         $worldSubCategories = Category::with(['children'])->where('parent_id', 1)->get();
         $worldPosts = $worldSubCategories->load('posts');

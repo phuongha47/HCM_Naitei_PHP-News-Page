@@ -18,7 +18,7 @@
                     <!-- Nested Row within Card Body -->
                     <div>
                         <div class="row align-avatar">
-                            <img class="avatar-big" src={{ asset( $path_to_ui . "img/sample_avt.png") }}>
+                            <img class="avatar-big" src={{ asset( $pathToUi . "img/sample_avt.png") }}>
                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#change_avatar">
                                 Change avatar
                             </a>

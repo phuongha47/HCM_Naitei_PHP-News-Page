@@ -34,11 +34,13 @@
                                             <input cols="30" type="text" name="name" class="form-control"
                                                 value="{{ $category->name }}">
                                         </div>
-                                        <select name="parent_id" class="form-control" id="sel1"
-                                            value="{{ $category->parent_id }}">
-                                            <option value="1">level-1</option>
-                                            <option value="2">level-1-1</option>
+                                        @if ($category->parent_id > 0)
+                                        <select name="parent_id" class="form-control" id="sel1">
+                                            @foreach ($categoriesSub as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @endif
                                         <input type="submit" value="{{ __('messages.submit') }}"
                                             class="btn btn-primary mt-5">
                                     </div>

@@ -24,9 +24,9 @@ class EditPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'unique:posts|max:255',
-            'body' => '|min:10|max:5000',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'max:255',
+            'body' => 'min:10|max:5000',
+            'image' => 'max:2048',
         ];
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Users\HomeController;
 use App\Http\Controllers\Users\UserPostController;
 use App\Http\Controllers\Users\UserCategoryController;
+use App\Http\Controllers\Users\CommentController;
 
 // use App\Http\Controllers\Users\UserPostController as ;
 
@@ -67,3 +68,7 @@ Route::get('lang/{lang}', [
     'as' => 'lang.switch',
     'uses' => 'LanguageController@switchLang'
 ]);
+
+Route::post('admin/comment/store/{id}', 'Users\CommentController@store')->name('comment.store');
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -9,13 +9,13 @@
   <title> @yield('pageTitle') - ADMIN </title>
 
   <!-- Custom fonts for this template-->
-  <link href= {{ asset( $path_to_ui . "vendor/fontawesome-free/css/all.min.css") }} rel="stylesheet" type="text/css">
+  <link href= {{ asset( $pathToUi . "vendor/fontawesome-free/css/all.min.css") }} rel="stylesheet" type="text/css">
  
   <!-- Custom styles for this template-->
-  <link href= {{ asset( $path_to_ui . "css/sb-admin-2.min.css") }} rel="stylesheet">
+  <link href= {{ asset( $pathToUi . "css/sb-admin-2.min.css") }} rel="stylesheet">
 
   <!-- Custom styles for this page -->
-  <link href= {{ asset( $path_to_ui . "vendor/datatables/dataTables.bootstrap4.min.css") }} rel="stylesheet">
+  <link href= {{ asset( $pathToUi . "vendor/datatables/dataTables.bootstrap4.min.css") }} rel="stylesheet">
 
   {{-- SUMMERNOTE --}}
   </head>
