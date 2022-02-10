@@ -23,6 +23,7 @@ class UserController extends Controller
      */
     public function __construct()
     {
+        $this->middleware('auth');
         // Var want to share
         view()->share('controllerName', $this->controllerName);
         view()->share('pathToUi', $this->pathToUi);
@@ -82,7 +83,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view($this->pathToView . 'viewProfile', compact(['user']));
     }
 
     /**
