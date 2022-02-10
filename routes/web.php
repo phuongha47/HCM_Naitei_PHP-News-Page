@@ -1,14 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\LanguageController;
-use App\Http\Controllers\Users\HomeController;
-use App\Http\Controllers\Users\UserPostController;
-use App\Http\Controllers\Users\UserCategoryController;
-
-// use App\Http\Controllers\Users\UserPostController as ;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,43 +12,150 @@ use App\Http\Controllers\Users\UserCategoryController;
 | contains the 'web' middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/admin', 'Admin\PostController@index')->name('post.index');
-Route::get('admin/create/', 'Admin\PostController@create')->name('post.create');
-Route::post('admin/store', 'Admin\PostController@store')->name('post.store');
-Route::get('admin/show/{id}', 'Admin\PostController@show')->name('post.show');
-Route::get('admin/edit/{post_id}', 'Admin\PostController@edit')->name('post.edit');
-Route::put('admin/update/{id}', 'Admin\PostController@update')->name('post.update');
-Route::delete('admin/delete/{id}', 'Admin\PostController@destroy')->name('post.destroy');
-Route::delete('admin/deleteAll', 'Admin\PostController@deleteAll')->name('post.deleteAll');
-Route::get('admin/post/search/', 'Admin\PostController@search')->name('post.search');
-
-Route::get('admin/user', 'Admin\UserController@index')->name('user.index');
-Route::get('admin/user/create/', 'Admin\UserController@create')->name('user.create');
-Route::post('admin/user/store', 'Admin\UserController@store')->name('user.store');
-Route::get('admin/user/show/{id}', 'Admin\UserController@show')->name('user.show');
-Route::get('admin/user/edit/{post_id}', 'Admin\UserController@edit')->name('user.edit');
-Route::put('admin/user/update/{id}', 'Admin\UserController@update')->name('user.update');
-Route::delete('admin/user/delete/{id}', 'Admin\UserController@destroy')->name('user.destroy');
-Route::delete('admin/user/deleteAll', 'Admin\UserController@deleteAll')->name('user.deleteAll');
-Route::get('admin/user/search/', 'Admin\UserController@search')->name('user.search');
-
-Route::get('admin/category', 'Admin\CategoryController@index')->name('category.index');
-Route::get('admin/category/create/', 'Admin\CategoryController@create')->name('category.create');
-Route::get('/admin/categorySub', 'Admin\CategoryController@createSubCategory')->name('categorysub.create');
-Route::post('admin/category/store', 'Admin\CategoryController@store')->name('category.store');
-Route::get('admin/category/show/{id}', 'Admin\CategoryController@show')->name('category.show');
-Route::get('admin/category/edit/{post_id}', 'Admin\CategoryController@edit')->name('category.edit');
-Route::put('admin/category/update/{id}', 'Admin\CategoryController@update')->name('category.update');
-Route::delete('admin/category/delete/{id}', 'Admin\CategoryController@destroy')->name('category.destroy');
-Route::delete('admin/category/deleteAll', 'Admin\CategoryController@deleteAll')->name('category.deleteAll');
-Route::get('admin/category/search/', 'Admin\CategoryController@search')->name('category.search');
-
 Route::get('lang/{lang}', [
     'as' => 'lang.switch',
-    'uses' => 'LanguageController@switchLang'
+    'uses' => 'LanguageController@switchLang',
 ]);
+
+Auth::routes();
+
+$userHomeController = 'App\Http\Controllers\Users\HomeController@';
+Route::get('/', $userHomeController . 'show')->name('home.index');
+Route::get('/show/{id}', $userHomeController . 'show')->name('home.category');
+Route::get('/search', $userHomeController . 'search')->name('home.search');
+
+$userCategoryController = 'App\Http\Controllers\Users\UserCategoryController@';
+Route::get('/category/show/{id}', $userCategoryController . 'show')->name('userCategory.show');
+Route::get('/category/showCategory/{id}', $userCategoryController . 'showCategory')
+    ->name('userCategory.showCategory');
+
+$userPostController = 'App\Http\Controllers\Users\PostController@';
+Route::get('/show/{id}', $userPostController . 'show')->name('userPost.show');
+
+// ==================================== ADMIN ====================================
+$adminPostController = 'App\Http\Controllers\Admin\PostController@';
+$adminUserController = 'App\Http\Controllers\Admin\UserController@';
+$adminCategoryController = 'App\Http\Controllers\Admin\CategoryController@';
+Route::prefix('admin')->middleware('is_admin')->group(
+    function () use ($adminPostController, $adminUserController, $adminCategoryController) {
+        Route::get("/", [
+            "as" => 'admin.index',
+            "uses" => 'App\Http\Controllers\Admin\AdminController@index',
+        ]);
+        // ------------------------------- Admin Post ---------------------------------
+        Route::get("/admin/post", [
+            "as" => 'post.index',
+            "uses" => $adminPostController . 'index',
+        ]);
+        Route::get("/admin/create", [
+            "as" => 'post.create',
+            "uses" => $adminPostController . 'create',
+        ]);
+        Route::post("/admin/store", [
+            "as" => 'post.store',
+            "uses" => $adminPostController . 'store',
+        ]);
+        Route::get("/admin/show/{id}", [
+            "as" => 'post.show',
+            "uses" => $adminPostController . 'show',
+        ]);
+        Route::get("admin/edit/{post_id}", [
+            "as" => 'post.edit',
+            "uses" => $adminPostController . 'edit',
+        ]);
+        Route::put("admin/update/{id}", [
+            "as" => 'post.update',
+            "uses" => $adminPostController . 'update',
+        ]);
+        Route::delete("admin/delete/{id}", [
+            "as" => 'post.destroy',
+            "uses" => $adminPostController . 'destroy',
+        ]);
+        Route::delete("admin/deleteAll", [
+            "as" => 'post.deleteAll',
+            "uses" => $adminPostController . 'deleteAll',
+        ]);
+        Route::get("admin/post/search/", [
+            "as" => 'post.search',
+            "uses" => $adminPostController . 'search',
+        ]);
+        // ------------------------------- Admin User ---------------------------------
+        Route::get("admin/user", [
+            "as" => 'user.index',
+            "uses" => $adminUserController . 'index',
+        ]);
+        Route::get("admin/user/create/", [
+            "as" => 'user.create',
+            "uses" => $adminUserController . 'create',
+        ]);
+        Route::post("admin/user/store", [
+            "as" => 'user.store',
+            "uses" => $adminUserController . 'store',
+        ]);
+        Route::get("admin/user/show/{id}", [
+            "as" => 'user.show',
+            "uses" => $adminUserController . 'show',
+        ]);
+        Route::get("admin/user/edit/{id}", [
+            "as" => 'user.edit',
+            "uses" => $adminUserController . 'edit',
+        ]);
+        Route::put("admin/user/update/{id}", [
+            "as" => 'user.update',
+            "uses" => $adminUserController . 'update',
+        ]);
+        Route::delete("admin/user/delete/{id}", [
+            "as" => 'user.destroy',
+            "uses" => $adminUserController . 'destroy',
+        ]);
+        Route::delete("admin/user/deleteAll", [
+            "as" => 'user.deleteAll',
+            "uses" => $adminUserController . 'deleteAll',
+        ]);
+        Route::get("admin/user/search/", [
+            "as" => 'user.search',
+            "uses" => $adminUserController . 'search',
+        ]);
+        // ------------------------------- Admin Category ---------------------------------
+        Route::get("admin/category", [
+            "as" => 'category.index',
+            "uses" => $adminCategoryController . 'index',
+        ]);
+        Route::get("admin/category/create/", [
+            "as" => 'category.create',
+            "uses" => $adminCategoryController . 'create',
+        ]);
+        Route::get("admin/categorySub", [
+            "as" => 'categorysub.create',
+            "uses" => $adminCategoryController . 'createSubCategory',
+        ]);
+        Route::post("admin/category/store", [
+            "as" => 'category.store',
+            "uses" => $adminCategoryController . 'store',
+        ]);
+        Route::get("admin/category/show/{id}", [
+            "as" => 'category.show',
+            "uses" => $adminCategoryController . 'show',
+        ]);
+        Route::get("admin/category/edit/{post_id}", [
+            "as" => 'category.edit',
+            "uses" => $adminCategoryController . 'edit',
+        ]);
+        Route::put("admin/category/update/{id}", [
+            "as" => 'category.update',
+            "uses" => $adminCategoryController . 'update',
+        ]);
+        Route::delete("admin/category/delete/{id}", [
+            "as" => 'category.destroy',
+            "uses" => $adminCategoryController . 'destroy',
+        ]);
+        Route::delete("admin/category/deleteAll", [
+            "as" => 'category.deleteAll',
+            "uses" => $adminCategoryController . 'deleteAll',
+        ]);
+        Route::get("admin/category/search/", [
+            "as" => 'category.search',
+            "uses" => $adminCategoryController . 'search',
+        ]);
+    }
+);
