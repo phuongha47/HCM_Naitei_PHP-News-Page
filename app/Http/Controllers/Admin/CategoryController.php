@@ -54,17 +54,10 @@ class CategoryController extends Controller
     {
         $categoriesSub = DB::table('categories')
             ->select('*')
-            ->where('parent_id', '>', '1')
+            ->whereNull('parent_id')
             ->get();
 
         return view($this->pathToView . 'addSubCategory', compact(['categoriesSub']));
-    }
-
-    public function storeSubCategory(AddSubCategoryRequest $request)
-    {
-        $Category = Category::create($request->all());
-
-        return redirect()->route('category.index');
     }
 
     public function create()
@@ -79,9 +72,19 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AddCategoryRequest $request)
+    public function storeSubCategory(AddSubCategoryRequest $request)
     {
-        $Category = Category::create($request->all());
+        if (!is_null($request->parent_id)) {
+            $Category = Category::create($request->all());
+        }
+
+        return redirect()->route('category.index');
+    }
+    public function storeCategory(AddCategoryRequest $request)
+    {
+        if (is_null($request->parent_id)) {
+            $Category = Category::create($request->all());
+        }
 
         return redirect()->route('category.index');
     }
@@ -106,8 +109,12 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::findOrFail($id);
-
-        return view($this->pathToView . 'editCategory', compact(['category']));
+        $categoriesSub = DB::table('categories')
+                    ->select('*')
+                    ->whereNull('parent_id')
+                    ->get();
+                    
+        return view($this->pathToView . 'editCategory', compact(['category', 'categoriesSub']));
     }
 
     /**
@@ -117,10 +124,18 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(EditCategoryRequest $request, $id)
     {
         $category = Category::findOrFail($id);
-        $category->update($request->all());
+        //check parent for category
+        if ((is_null($category->parent_id)) && (is_null($request->parent_id))) {
+            $category->update($request->all());
+        } elseif ((!is_null($category->parent_id))//check parent for sub_category
+            && (!is_null($request->parent_id))
+            && ($category->id != $request->parent_id)) {
+            $category->update($request->all());
+        }
        
         return redirect()->route('category.index');
     }
