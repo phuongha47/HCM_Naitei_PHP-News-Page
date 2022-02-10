@@ -26,7 +26,7 @@
                                     <h1 class="h4 text-gray-900 mb-4">{{ __('messages.fillSubCategoryInfomation') }}
                                     </h1>
                                 </div>
-                                <form class="user" method="POST" action="{{ route('category.store') }}">
+                                <form class="user" method="POST" action="{{ route('category.storeSubCategory') }}">
                                     <div class="form-group">
                                         {{ method_field('POST') }}
                                         @csrf
