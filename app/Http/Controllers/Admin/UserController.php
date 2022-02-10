@@ -85,7 +85,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return view($this->path_to_view . 'viewProfile', compact(['user']));
+        return view($this->pathToView . 'viewProfile', compact(['user']));
     }
 
     /**

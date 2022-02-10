@@ -14,7 +14,8 @@ use App\Http\Controllers\LanguageController;
 */
 Route::get('lang/{lang}', [
     'as' => 'lang.switch',
-    'uses' => 'LanguageController@switchLang']);
+    'uses' => 'LanguageController@switchLang',
+]);
 
 Auth::routes();
 
