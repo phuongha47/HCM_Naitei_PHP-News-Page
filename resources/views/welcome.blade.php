@@ -15,9 +15,7 @@
                     @foreach($imgPosts as $img)
                     @if ($img->imageable_id == $post->id)
                     <a href="{{ route('userPost.show', $post->id) }}">
-                        <div class="thumbnail"><img class="img_home" src=" {{ url('storage/images/'.$img->link) }}"
-                                alt="">
-                        </div>
+                        <div class="thumbnail"><img src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
                     </a>
                     @endif
                     @endforeach
@@ -45,8 +43,7 @@
                     @foreach($imgPosts as $img)
                     @if ($img->imageable_id == $post->id)
                     <a href="{{ route('userPost.show', $post->id) }}">
-                        <div class="thumbnail"><img class="img_home" src="{{ url('storage/images/'.$img->link) }}"
-                                alt=""></div>
+                        <div class="thumbnail"><img src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
                     </a>
                     @endif
                     @endforeach
@@ -77,8 +74,7 @@
                             @foreach($imgPosts as $img)
                             @if ($img->imageable_id == $post->id)
                             <a href="{{ route('userPost.show', $post->id) }}">
-                                <div class="thumbnail"><img class="img_home"
-                                        src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
+                                <div class="thumbnail"><img src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
                             </a>
                             @endif
                             @endforeach
@@ -106,8 +102,7 @@
                             @foreach($imgPosts as $img)
                             @if ($img->imageable_id == $post->id)
                             <a href="{{ route('userPost.show', $post->id) }}">
-                                <div class="thumbnail"><img class="img_home"
-                                        src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
+                                <div class="thumbnail"><img src="{{ url('storage/images/'.$img->link) }}" alt=""></div>
                             </a>
                             @endif
                             @endforeach
@@ -139,7 +134,7 @@
                                 <div class="post-entry-2 d-flex">
                                     @foreach($imgPosts as $img)
                                     @if ($img->imageable_id == $post->id)
-                                    <a href="{{ route('userPost.show', $post->id) }}"><img class="img_home"
+                                    <a href="{{ route('userPost.show', $post->id) }}"><img
                                             src="{{ url('storage/images/'.$img->link) }}" alt=""></a>
                                     @endif
                                     @endforeach
@@ -169,7 +164,7 @@
                                     <div class="trend-contents">
                                         @foreach($imgPosts as $img)
                                         @if ($img->imageable_id == $post->id)
-                                        <a href="{{ route('userPost.show', $post->id) }}"><img class="img_home"
+                                        <a href="{{ route('userPost.show', $post->id) }}"><img
                                                 src="{{ url('storage/images/'.$img->link) }}" alt=""></a>
                                         @endif
                                         @endforeach
