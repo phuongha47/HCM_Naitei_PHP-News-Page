@@ -96,7 +96,8 @@ class UserControllerTest extends TestCase
     //  test_return_form_edit
     public function testEditReturnsView()
     {
-        $user = User::factory()->make();
+        $user = Mockery::mock(User::class)->makePartial();
+        $user->id = 1;
         $this->mockObject->shouldReceive('edit')
             ->times(1)
             ->with($user->id)
@@ -109,6 +110,7 @@ class UserControllerTest extends TestCase
     //  test_store
     public function testStoreUser()
     {
+        DB::shouldReceive('beginTransaction');
         $user = new UserAddRequest(
             [
             'name' => 'jmac',
