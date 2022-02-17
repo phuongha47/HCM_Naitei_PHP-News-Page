@@ -33,6 +33,10 @@ class UserControllerTest extends TestCase
         $this->controller = new UserController($this->mockObject);
     }
     
+    public function tearDown(): void 
+    {
+        Mockery::close();
+    }
     //  test_show_list
     public function testIndexUserList()
     {
