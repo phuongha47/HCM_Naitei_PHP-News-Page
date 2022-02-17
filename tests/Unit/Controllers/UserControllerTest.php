@@ -16,8 +16,6 @@ use App\Repositories\User\UserRepository;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Log;
-use DB;
 
 class UserControllerTest extends TestCase
 {
@@ -52,39 +50,6 @@ class UserControllerTest extends TestCase
         $this->assertEquals('admin.pages.listUser', $response->getName());
     }
     
-    //  validate_add_user
-    public function testValidationAddUser()
-    {
-        $request = new UserAddRequest();
-
-        $this->assertEquals(
-            [
-                'name' => 'required|alpha_num|min:3|max:255',
-                'password' => 'required|confirmed|min:6',
-                'password_confirmation' => 'min:6',
-                'role_id' => 'required',
-                'email' => 'email|unique:users',
-            ],
-            $request->rules()
-        );
-    }
-    
-    //  validate_edit
-    public function testValidationEdit()
-    {
-        $request = new UserEditRequest();
-
-        $this->assertEquals(
-            [
-                'name' => 'min:3|max:255',
-                'password' => 'nullable|confirmed|min:6',
-                'password_confirmation' => 'nullable|min:6',
-                'email' => 'email',
-            ],
-            $request->rules(),
-        );
-    }
-    
     //  test_return_form_create
     public function testCreateReturnsView()
     {
@@ -96,8 +61,7 @@ class UserControllerTest extends TestCase
     //  test_return_form_edit
     public function testEditReturnsView()
     {
-        $user = Mockery::mock(User::class)->makePartial();
-        $user->id = 1;
+        $user = User::factory()->make();
         $this->mockObject->shouldReceive('edit')
             ->times(1)
             ->with($user->id)
@@ -110,7 +74,6 @@ class UserControllerTest extends TestCase
     //  test_store
     public function testStoreUser()
     {
-        DB::shouldReceive('beginTransaction');
         $user = new UserAddRequest(
             [
             'name' => 'jmac',
@@ -134,7 +97,6 @@ class UserControllerTest extends TestCase
     //  test_update
     public function testUpdateUser()
     {
-        DB::shouldReceive('beginTransaction');
         $user = User::factory()->make();
         $user_edit_info = new UserEditRequest(
             [
@@ -146,8 +108,6 @@ class UserControllerTest extends TestCase
             ->times(1)
             ->with($user->id, $user_edit_info)
             ->andReturn($user_edit_info);
-        DB::shouldReceive('rollback');
-        Log::shouldReceive('error');
         $response = $this->controller->update($user_edit_info, $user->id);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
