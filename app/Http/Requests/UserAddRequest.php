@@ -28,6 +28,7 @@ class UserAddRequest extends FormRequest
             'password' => 'required|confirmed|min:6',
             'password_confirmation' => 'min:6',
             'role_id' => 'required',
+            'email' => 'email|unique:users',
         ];
     }
 }

@@ -4,6 +4,8 @@ namespace Tests\Unit\Views;
 
 use App\Models\User;
 use Tests\TestCase;
+use Mockery;
+use App\Http\Controllers\Admin\UserController;
 
 class UserListViewTest extends TestCase
 {
@@ -23,6 +25,7 @@ class UserListViewTest extends TestCase
     //  check var in view
     public function testVarUserFromDatabase()
     {
-        $this->get('admin/user')->assertViewHas('users');
+        $this->get('admin/user')->assertViewHas('searchKeyWord');
     }
+
 }
