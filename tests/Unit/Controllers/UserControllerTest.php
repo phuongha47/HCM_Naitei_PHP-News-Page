@@ -24,7 +24,8 @@ class UserControllerTest extends TestCase
      *
      * @return void
      */
-    public $mockObject, $controller;
+    public $mockObject;
+    public $controller;
     protected function setUp(): void
     {
         parent::setUp();
