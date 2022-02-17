@@ -33,7 +33,7 @@ class UserControllerTest extends TestCase
         $this->controller = new UserController($this->mockObject);
     }
     
-    public function tearDown(): void 
+    public function tearDown(): void
     {
         Mockery::close();
     }
