@@ -16,6 +16,8 @@ use App\Repositories\User\UserRepository;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Log;
+use DB;
 
 class UserControllerTest extends TestCase
 {
@@ -130,6 +132,7 @@ class UserControllerTest extends TestCase
     //  test_update
     public function testUpdateUser()
     {
+        DB::shouldReceive('beginTransaction');
         $user = User::factory()->make();
         $user_edit_info = new UserEditRequest(
             [
@@ -141,6 +144,8 @@ class UserControllerTest extends TestCase
             ->times(1)
             ->with($user->id, $user_edit_info)
             ->andReturn($user_edit_info);
+        DB::shouldReceive('rollback');
+        Log::shouldReceive('error');
         $response = $this->controller->update($user_edit_info, $user->id);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
