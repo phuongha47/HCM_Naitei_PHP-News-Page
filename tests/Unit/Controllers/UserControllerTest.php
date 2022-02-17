@@ -5,9 +5,17 @@ namespace Tests\Unit\Controllers;
 use Tests\TestCase;
 use App\Models\User;
 use App\Http\Controllers\Admin\UserController;
+use Illuminate\Http\Request;
 use App\Http\Requests\UserAddRequest;
 use App\Http\Requests\UserEditRequest;
 use Illuminate\Support\Facades\Route;
+use Mockery;
+use Mockery\MockInterface;
+use App\Services\Web\UserService;
+use App\Repositories\User\UserRepository;
+use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
 
 class UserControllerTest extends TestCase
 {
@@ -16,13 +24,27 @@ class UserControllerTest extends TestCase
      *
      * @return void
      */
-
+    public $mockObject, $controller;
     protected function setUp(): void
     {
         parent::setUp();
-        
-        $this->artisan('migrate:fresh --seed');
+        $this->mockObject = Mockery::mock(UserRepository::class)->makePartial();
+        $this->controller = new UserController($this->mockObject);
     }
+    
+    //  test_show_list
+    public function testIndexUserList()
+    {
+        $users = User::factory(5)->make();
+        $this->mockObject->shouldReceive('getAll')
+            ->times(1)
+            ->withNoArgs()
+            ->andReturn($users);
+        $response = $this->controller->index();
+        
+        $this->assertEquals('admin.pages.listUser', $response->getName());
+    }
+    
     //  validate_add_user
     public function testValidationAddUser()
     {
@@ -39,6 +61,7 @@ class UserControllerTest extends TestCase
             $request->rules()
         );
     }
+    
     //  validate_edit
     public function testValidationEdit()
     {
@@ -54,83 +77,120 @@ class UserControllerTest extends TestCase
             $request->rules(),
         );
     }
-    //  test_name_require
-    public function testStoreUserEmpty()
-    {
-        $response = $this->post(
-            'admin/user/store',
-            [
-                'name' => '',
-                'email' => 'jmac@example.com',
-                'password' => 'password',
-                'password_confirmation' => 'password',
-                'role_id' => 1,
-            ]
-        );
-        
-        $response->assertSessionHasErrors('name');
-    }
+    
     //  test_return_form_create
     public function testCreateReturnsView()
     {
-        $controller = new UserController();
-
-        $view = $controller->create();
+        $view = $this->controller->create();
 
         $this->assertEquals('admin.pages.addUser', $view->getName());
     }
-    //  test_create
-    public function testStoreUser()
-    {
-        $user = $this->post(
-            'admin/user/store',
-            [
-                'name' => 'JMac',
-                'email' => 'jmac@example.com',
-                'password' => 'password',
-                'password_confirmation' => 'password',
-                'role_id' => 1,
-            ]
-        );
-        
-        $this->assertDatabaseHas('users', ['name' => 'JMac']);
-        $user->assertRedirect(route('user.index'));
-    }
-    //  test_delete_by_id
-    public function testDeleteUser()
-    {
-        $user = $this->delete('admin/user/delete/3');
-        
-        $user->assertRedirect(route('user.index'));
-    }
-    //  test_return_form_edit
+    
+     //  test_return_form_edit
     public function testEditReturnsView()
     {
-        $userInfo = ['id' => 21];
-        $user = new User($userInfo);
-        $controller = new UserController();
-        $view = $controller->edit($user);
-        
+        $user = User::factory()->make();
+        $this->mockObject->shouldReceive('edit')
+            ->times(1)
+            ->with($user->id)
+            ->andReturn($user);
+        $view = $this->controller->edit($user->id);
+
         $this->assertEquals('admin.pages.editUser', $view->getName());
     }
-    //test update
-    public function testUpdateUser()
+   
+    //  test_store
+    public function testStoreUser()
     {
-        $user = $this->put(
-            'admin/user/update/2',
+        $user = new UserAddRequest(
             [
-                'name' => 'JMacUpdate',
-                'email' => 'JMacUpdate@gmail.com',
+            'name' => 'jmac',
+            'email' => 'jmac@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+            'role_id' => 1,
             ]
         );
-
-        $this->assertDatabaseHas('users', ['name' => 'JMacUpdate']);
-        $user->assertRedirect(route('user.index'));
+        $this->mockObject->shouldReceive('create')
+            ->times(1)
+            ->with($user)
+            ->andReturn($user);
+            
+        $response = $this->controller->store($user);
+        
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertEquals(302, $response->getStatusCode());
     }
-    //check search
+    
+    //  test_update
+    public function testUpdateUser()
+    {
+        $user = User::factory()->make();
+        $user_edit_info = new UserEditRequest(
+            [
+            'name' => 'jmac',
+            'email' => 'jmac@example.com',
+            ]
+        );
+        $this->mockObject->shouldReceive('update')
+            ->times(1)
+            ->with($user->id, $user_edit_info)
+            ->andReturn($user_edit_info);
+        $response = $this->controller->update($user_edit_info, $user->id);
+
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+        $this->assertEquals(302, $response->getStatusCode());
+    }
+    
+    //  test_delete
+    public function testDeleteUser()
+    {
+        $user = User::factory()->make();
+        $this->mockObject->shouldReceive('delete')
+            ->times(1)
+            ->with($user->id)
+            ->andReturnNull();
+        $response = $this->controller->destroy($user->id);
+        
+        $this->assertEquals(302, $response->getStatusCode());
+    }
+    
+    //  test_password_hashed
+    public function testPasswordWillBeHashed()
+    {
+        Hash::shouldReceive('make')
+            ->once()
+            ->andReturn('hashed');
+        $user = new User(
+            [
+            'name' => 'User',
+            'password' => 'rawpassword',
+            ]
+        );
+        $password = Hash::make($user->password);
+
+        $this->assertEquals('hashed', $password);
+    }
+    
+    //  test_email_varified
+    public function testCheckUserEmailVerified()
+    {
+        $user = User::factory()->make();
+        $user->email_verified_at = now();
+
+        $this->assertTrue($user->hasVerifiedEmail());
+    }
+    
+    //  test_search
     public function testCheckSearch()
     {
-        $user = $this->get('admin/user/search')
-            ->assertViewHas('searchKeyWord');
+        $key = new Request(['user1']);
+        $response = $this->mockObject->shouldReceive('search')
+            ->times(1)
+            ->with($key)
+            ->andReturn();
+        $view = $this->controller->search($key);
+
+        $this->assertEquals('admin.pages.listUser', $view->getName());
     }
 }
