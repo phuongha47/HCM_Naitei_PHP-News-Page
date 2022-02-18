@@ -27,10 +27,9 @@ abstract class BaseRepository implements RepositoryInterface
             $this->getModel()
         );
     }
-
     public function getAll()
     {
-        return $this->model::firstOrFail();
+        return $this->model->all();
     }
 
     public function find($id)
