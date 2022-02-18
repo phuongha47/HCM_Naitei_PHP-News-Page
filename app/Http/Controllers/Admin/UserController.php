@@ -28,6 +28,7 @@ class UserController extends Controller
      */
     public function __construct(UserRepositoryInterface $userRepo)
     {
+        $this->middleware('auth');
         // Var want to share
         view()->share('controllerName', $this->controllerName);
         view()->share('pathToUi', $this->pathToUi);
@@ -84,7 +85,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view($this->pathToView . 'viewProfile', compact(['user']));
     }
 
     /**
@@ -132,6 +135,7 @@ class UserController extends Controller
         $results = $this->userRepo->search($request);
         $users = $results[0];
         $searchKeyWord = $results[1];
+      
         return view($this->pathToView . 'listUser', compact('users', 'searchKeyWord'));
     }
 }
