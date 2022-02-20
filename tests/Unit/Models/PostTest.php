@@ -64,7 +64,7 @@ class PostTest extends TestCase
     public function testPostBelongsToUser()
     {
         $this->assertInstanceOf(BelongsTo::class, $this->post->user());
-        $this->assertEquals("author_id", $this->post->user()->getForeignKeyName());
+        $this->assertEquals("user_id", $this->post->user()->getForeignKeyName());
     }
     // Post HasMany Images
     public function testPostHasManyImages()
