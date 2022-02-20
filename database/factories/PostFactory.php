@@ -18,13 +18,8 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->title(),
             'body' => $this->faker->realText(),
-<<<<<<< HEAD
             'author_id' => (User::factory()->make())->id,
             'category_id' => (Category::factory()->make())->id,
-=======
-            'author_id' => (User::factory()->create())->id,
-            'category_id' => (Category::factory()->create())->id,
->>>>>>> master
         ];
     }
 }

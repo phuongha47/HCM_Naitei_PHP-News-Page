@@ -6,16 +6,11 @@ use App\Models\Comment;
 use App\Models\User;
 use App\Models\Post;
 
-<<<<<<< HEAD
-=======
-use Illuminate\Foundation\Testing\DatabaseMigrations;
->>>>>>> master
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\TestCase;
 
 class CommentTest extends TestCase
 {
-<<<<<<< HEAD
     public $user;
     public $post;
     public $comment;
@@ -33,10 +28,10 @@ class CommentTest extends TestCase
 
     public function tearDown(): void
     {
+        unset($this->user);
+        unset($this->post);
+        unset($this->comment);
         parent::tearDown();
-        $this->user = null;
-        $this->post = null;
-        $this->comment = null;
     }
 
     public function testCommentBelongsToAnOwner()
@@ -53,35 +48,5 @@ class CommentTest extends TestCase
         $this->assertInstanceOf(BelongsTo::class, $this->comment->post());
         // Test foreign key
         $this->assertEquals('post_id', $this->comment->post()->getForeignKeyName());
-=======
-    use DatabaseMigrations;
-
-    public function testCommentBelongsToAnOwner(){
-        $user = User::factory()->create();
-        $post = Post::factory()->create();
-        $comment = Comment::factory()->create([
-            'user_id' => $user->id,
-            'post_id' => $post->id,
-        ]);
-
-        // Test belongsTo
-        $this->assertInstanceOf(BelongsTo::class, $comment->user());
-        // Test foreign key
-        $this->assertEquals('user_id', $comment->user()->getForeignKeyName());
-    }
-
-    public function testCommentBelongsToAPost(){
-        $user = User::factory()->create();
-        $post = Post::factory()->create();
-        $comment = Comment::factory()->create([
-            'user_id' => $user->id,
-            'post_id' => $post->id,
-        ]);
-
-        // Test belongsTo
-        $this->assertInstanceOf(BelongsTo::class, $comment->post());
-        // Test foreign key
-        $this->assertEquals('post_id', $comment->post()->getForeignKeyName());
->>>>>>> master
     }
 }

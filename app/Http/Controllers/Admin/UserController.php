@@ -20,12 +20,7 @@ class UserController extends Controller
     private $pathToUi = 'ui_resources/startbootstrap-sb-admin-2/';
     protected $userRepo;
     protected $searchKeyWord = '';
-    
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function __construct(UserRepositoryInterface $userRepo)
     {
         $this->middleware('auth');
@@ -35,6 +30,12 @@ class UserController extends Controller
         $this->limit = config('app.limit');
         $this->userRepo = $userRepo;
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         try {
@@ -42,6 +43,7 @@ class UserController extends Controller
         } catch (ModelNotFoundException $exception) {
             return back()->withError($exception->getMessage())->withInput();
         }
+
         return view(
             $this->pathToView . 'listUser',
             array_merge(
@@ -73,7 +75,7 @@ class UserController extends Controller
     {
         $password = Hash::make($request->password);
         $user = $this->userRepo->create($request);
-        
+
         return redirect()->route('user.index');
     }
 
@@ -113,7 +115,7 @@ class UserController extends Controller
     public function update(UserEditRequest $request, $id)
     {
         $this->userRepo->update($id, $request);
-        
+
         return redirect()->route('user.index');
     }
 
@@ -129,13 +131,13 @@ class UserController extends Controller
 
         return redirect()->route('user.index');
     }
-    
+
     public function search(Request $request)
     {
         $results = $this->userRepo->search($request);
         $users = $results[0];
         $searchKeyWord = $results[1];
-      
+
         return view($this->pathToView . 'listUser', compact('users', 'searchKeyWord'));
     }
 }
