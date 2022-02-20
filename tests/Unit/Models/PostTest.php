@@ -15,6 +15,7 @@ use Tests\TestCase;
 use Mockery;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class PostTest extends TestCase
 {
@@ -38,56 +39,43 @@ class PostTest extends TestCase
         $this->images = Image::factory()->make(["imageable_id" => $this->post->id, "imageable_type" => Post::class]);
         $this->comments = Comment::factory()->make(["post_id" => $this->post->id]);
     }
+    public function tearDown(): void
+    {
+        $this->post = null;
+        $this->category = null;
+        $this->user = null;
+        $this->image = null;
+        $this->comment = null;
+        parent::tearDown();
+    }
     /** @test */
-    // check columns
-    public function testPostDatabaseHasExpectedColumns()
-    {
-        $this->assertTrue(Schema::hasColumns("posts",
-            [
-                "id","title", "body", "author_id", "category_id",
-            ]
-        ), 1);
-    }
-    // Fillable
-    public function testContainsValidFillableProperties()
-    {
-        $post = Post::factory()->make(
-            [
-                "category_id" => $this->category->id,
-            ]
-        );
-        
-        $this->assertEquals(
-            [
-                "title", "body", "category_id", "author_id",
-            ], $post->getFillable());
-    }
     // Primary Key
     public function testContainsPrimaryKeyProperties()
-    {        
+    {
         $this->assertEquals("id", $this->post->getKeyName());
     }
     // Post BelongsTo Category
     public function testPostBelongsToCategory()
-    {         
+    {
         $this->assertInstanceOf(BelongsTo::class, $this->post->category());
         $this->assertEquals("category_id", $this->post->category()->getForeignKeyName());
     }
     // Post BelongsTo User
     public function testPostBelongsToUser()
-    { 
+    {
         $this->assertInstanceOf(BelongsTo::class, $this->post->user());
         $this->assertEquals("author_id", $this->post->user()->getForeignKeyName());
     }
     // Post HasMany Images
     public function testPostHasManyImages()
     {
+        $this->assertInstanceOf(MorphMany::class, $this->post->images());
         //  Posts related category
         $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->post->images);
     }
     // Post HasMany Comments
     public function testPostHasManyComments()
-    {        
+    {
         //  Check foreignkey
         $this->assertEquals("post_id", $this->post->comments()->getForeignKeyName());
         //  Posts related category

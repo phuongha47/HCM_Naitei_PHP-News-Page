@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Tests\TestCase;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+
 class CategoryTest extends TestCase
 {
     /**
@@ -27,28 +28,26 @@ class CategoryTest extends TestCase
         $this->category = Category::factory()->make();
         $this->post = Post::factory()->make(["category_id" => $this->category->id]);
     }
-    public function test_post_database_has_expected_columns()
+    public function tearDown(): void
     {
-        $this->assertTrue(Schema::hasColumns("categories",
-            [
-                "id", "name", "parent_id",
-            ]
-        ), 1);
+        $this->post = null;
+        $this->category = null;
+        parent::tearDown();
     }
-    public function test_category_has_many_posts()
-    {   
+    public function testCategoryHasManyPosts()
+    {
         $this->assertInstanceOf(HasMany::class, $this->category->posts());
-        //  kiểm tra foreignkey
+        //  Check foreignkey
         $this->assertEquals("category_id", $this->category->posts()->getForeignKeyName());
-        //  posts related category
+        //  Posts related category
         $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->category->posts);
     }
-    public function test_category_has_many_childrens()
-    {        
-        $this->assertInstanceOf(HasMany::class, $this->category->children());
-        //  kiểm tra foreignkey
-        $this->assertEquals("parent_id", $this->category->children()->getForeignKeyName());
-        //  posts related category
-        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->category->children);
+    public function testCategoryHasManyChildrens()
+    {
+        $this->assertInstanceOf(HasMany::class, $this->category->childrens());
+        //  Check foreignkey
+        $this->assertEquals("parent_id", $this->category->childrens()->getForeignKeyName());
+        //  Posts related category
+        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->category->childrens);
     }
 }

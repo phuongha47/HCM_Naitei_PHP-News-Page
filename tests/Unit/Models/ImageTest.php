@@ -13,6 +13,7 @@ use Tests\TestCase;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class ImageTest extends TestCase
 {
@@ -28,48 +29,43 @@ class ImageTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
         $this->user = User::factory()->make();
         $this->category = Category::factory()->make();
         $this->post = Post::factory()->make(["category_id" => $this->category->id]);
     }
-    public function test_post_database_has_expected_columns()
+    public function tearDown(): void
     {
-        $this->assertTrue(Schema::hasColumns("images",
-            [
-            "imageable_id", "link", "imageable_type",
-            ]
-        ), 1);
+        $this->post = null;
+        $this->category = null;
+        $this->user = null;
+        $this->image = null;
+        parent::tearDown();
     }
-    public function test_imageable_with_post()
+    // Images with post
+    public function testImageableWithPost()
     {
-        $images = Image::factory()->make(
-            [
+        $images = Image::factory()->make([
                 "imageable_id" => $this->post->id,
                 "imageable_type" => Post::class,
-            ]
-        ); 
+        ]);
         $relation = $this->post->images();
         
-        $this->assertInstanceOf(MorphMany::class, $this->post->images());
         $this->assertEquals("imageable_type", $relation->getMorphType());
         $this->assertEquals("imageable_id", $relation->getForeignKeyName());
         $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->post->images);
     }
-     public function test_imageable_with_user()
+    // Image with user
+    public function testImageableWithUser()
     {
-        $image = Image::factory()->make(
-            [
+        $image = Image::factory()->make([
                 "imageable_id" => $this->user->id,
                 "imageable_type" => User::class,
-            ]
-        ); 
+        ]);
         $relation = $this->user->image();
         
         $this->assertEquals("imageable_type", $relation->getMorphType());
         $this->assertEquals("imageable_id", $relation->getForeignKeyName());
         $this->assertInstanceOf(MorphOne::class, $this->user->image());
-
-        // $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $user->image);
     }
-    /** @test */
 }

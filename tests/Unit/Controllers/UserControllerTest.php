@@ -35,6 +35,8 @@ class UserControllerTest extends TestCase
     
     public function tearDown(): void
     {
+        $this->controller = Null;
+        $this->mockObject = Null;
         Mockery::close();
     }
     //  test_show_list
@@ -74,15 +76,13 @@ class UserControllerTest extends TestCase
     //  test_store
     public function testStoreUser()
     {
-        $user = new UserAddRequest(
-            [
+        $user = new UserAddRequest([
             'name' => 'jmac',
             'email' => 'jmac@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
             'role_id' => 1,
-            ]
-        );
+        ]);
         $this->mockObject->shouldReceive('create')
             ->times(1)
             ->with($user)
@@ -98,12 +98,10 @@ class UserControllerTest extends TestCase
     public function testUpdateUser()
     {
         $user = User::factory()->make();
-        $user_edit_info = new UserEditRequest(
-            [
+        $user_edit_info = new UserEditRequest([
             'name' => 'jmac',
             'email' => 'jmac@example.com',
-            ]
-        );
+        ]);
         $this->mockObject->shouldReceive('update')
             ->times(1)
             ->with($user->id, $user_edit_info)
@@ -133,12 +131,10 @@ class UserControllerTest extends TestCase
         Hash::shouldReceive('make')
             ->once()
             ->andReturn('hashed');
-        $user = new User(
-            [
+        $user = new User([
             'name' => 'User',
             'password' => 'rawpassword',
-            ]
-        );
+        ]);
         $password = Hash::make($user->password);
 
         $this->assertEquals('hashed', $password);
