@@ -18,8 +18,13 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
+<<<<<<< HEAD
             'user_id' => (User::factory()->make())->id,
             'post_id' => (Post::factory()->make())->id,
+=======
+            'user_id' => (User::factory()->create())->id,
+            'post_id' => (Post::factory()->create())->id,
+>>>>>>> master
             'content' => $this->faker->realText(),
             'parent_id' => rand(1, 10),
         ];
