@@ -28,7 +28,6 @@ class ImageTest extends TestCase
 
     public function setUp(): void
     {
-        parent::setUp();
         $this->user = User::factory()->make();
         $this->category = Category::factory()->make();
         $this->post = Post::factory()->make(["category_id" => $this->category->id]);
