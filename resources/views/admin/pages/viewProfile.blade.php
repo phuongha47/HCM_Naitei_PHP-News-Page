@@ -33,7 +33,7 @@
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <form class="edit-avatar" href={{ route('admin.view_profile') }}>
+                                            <form class="edit-avatar" href={{ route('user.show', ['id' => $user->id ]) }}>
                                                 <label for="img">{{ __('messages.selectImage') }}</label>
                                                 <input type="file" id="img" name="img" accept="image/*">
                                                 <input class="btn btn-primary" type="submit">
@@ -47,11 +47,27 @@
                             </div>
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">{{ __('messages.userInfo') }}</h1>
+                                    <h1 class="h4 text-gray-900 mb-4">{{ __('messages.userInformation') }}</h1>
                                 </div>
+                                <table class="table table-bordered text-left" width="100%" cellspacing="0">
+                                    <tbody>
+                                        <tr>
+                                            <th>{{ __('messages.Username') }}</th>
+                                            <th>{{ $user->name }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ __('messages.Mail') }}</th>
+                                            <th>{{ $user->email }}</th>
+                                        </tr>
+                                        <tr>
+                                            <th>{{ __('messages.role') }}</th>
+                                            <th>{{ $user->role['name'] }}</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
                                 <form class="user">
-                                    <a href={{ route('admin.edit_user') }} class="btn btn-primary btn-user btn-block">
-                                        {{ __('messages.EDIT') }} 
+                                    <a href={{ route('user.edit', ['id' => $user->id ]) }} class="btn btn-primary btn-user btn-block">
+                                        {{ __('messages.EDIT') }}
                                     </a>
                                     <hr>
                                 </form>
@@ -60,7 +76,10 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
     </div>
+
 </div>
 @endsection
