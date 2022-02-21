@@ -25,25 +25,4 @@ class Category extends Model
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
-
-    public function getParentsNames()
-    {
-        if ($this->parent) {
-            return $this->parent->getParentsNames() . " > " . $this->name;
-        } else {
-            return $this->name;
-        }
-    }
-
-    public function getParentsAttribute()
-    {
-        $parents = collect([]);
-        $parent = $this->parent;
-        while (!is_null($parent)) {
-            $parents->push($parent);
-            $parent = $parent->parent;
-        }
-
-        return $parents;
-    }
 }

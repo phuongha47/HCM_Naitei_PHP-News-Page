@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Tests\TestCase;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -21,7 +22,6 @@ class CategoryTest extends TestCase
      */
     public $post;
     public $category;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -39,15 +39,15 @@ class CategoryTest extends TestCase
         $this->assertInstanceOf(HasMany::class, $this->category->posts());
         //  Check foreignkey
         $this->assertEquals("category_id", $this->category->posts()->getForeignKeyName());
-        //  Posts related category
-        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->category->posts);
     }
     public function testCategoryHasManyChildrens()
     {
         $this->assertInstanceOf(HasMany::class, $this->category->childrens());
         //  Check foreignkey
         $this->assertEquals("parent_id", $this->category->childrens()->getForeignKeyName());
-        //  Posts related category
-        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->category->childrens);
+    }
+    public function testCategoryBelongToParent()
+    {
+        $this->assertInstanceOf(BelongsTo::class, $this->category->parent());
     }
 }

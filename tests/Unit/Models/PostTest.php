@@ -30,6 +30,7 @@ class PostTest extends TestCase
     public $category;
     public $image;
     public $comment;
+    
     public function setUp(): void
     {
         parent::setUp();
@@ -48,6 +49,7 @@ class PostTest extends TestCase
         $this->comment = null;
         parent::tearDown();
     }
+    
     /** @test */
     // Primary Key
     public function testContainsPrimaryKeyProperties()
@@ -70,8 +72,6 @@ class PostTest extends TestCase
     public function testPostHasManyImages()
     {
         $this->assertInstanceOf(MorphMany::class, $this->post->images());
-        //  Posts related category
-        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->post->images);
     }
     // Post HasMany Comments
     public function testPostHasManyComments()
@@ -79,6 +79,6 @@ class PostTest extends TestCase
         //  Check foreignkey
         $this->assertEquals("post_id", $this->post->comments()->getForeignKeyName());
         //  Posts related category
-        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->post->comments);
+        $this->assertInstanceOf(HasMany::class, $this->post->comments());
     }
 }
