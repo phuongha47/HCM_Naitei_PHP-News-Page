@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://127.0.0.1:8000/'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -231,5 +231,5 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
-    'limit' => 5,
+    'limit' => 3,
 ];
