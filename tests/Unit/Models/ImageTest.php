@@ -45,27 +45,28 @@ class ImageTest extends TestCase
     // Images with post
     public function testImageableWithPost()
     {
-        $images = Image::factory()->make([
-                "imageable_id" => $this->post->id,
-                "imageable_type" => Post::class,
+        $image = Image::factory()->make([
+            "imageable_id" => $this->post->id,
+            "imageable_type" => Post::class,
         ]);
         $relation = $this->post->images();
-        
+
+        $this->assertInstanceOf(MorphTo::class, $image->imageable());
         $this->assertEquals("imageable_type", $relation->getMorphType());
         $this->assertEquals("imageable_id", $relation->getForeignKeyName());
-        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->post->images);
     }
     // Image with user
     public function testImageableWithUser()
     {
         $image = Image::factory()->make([
-                "imageable_id" => $this->user->id,
-                "imageable_type" => User::class,
+            "imageable_id" => $this->user->id,
+            "imageable_type" => User::class,
         ]);
+        
         $relation = $this->user->image();
         
+        $this->assertInstanceOf(MorphTo::class, $image->imageable());
         $this->assertEquals("imageable_type", $relation->getMorphType());
         $this->assertEquals("imageable_id", $relation->getForeignKeyName());
-        $this->assertInstanceOf(MorphOne::class, $this->user->image());
     }
 }

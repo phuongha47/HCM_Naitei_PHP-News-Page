@@ -10,7 +10,7 @@ class Post extends Model
     use HasFactory;
     protected $table = 'posts';
     protected $primaryKey = 'id';
-
+    protected $fillable = ['id', 'title', 'body', 'author_id', 'category_id'];
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
@@ -18,7 +18,7 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'post_id');
     }
 
     public function category()

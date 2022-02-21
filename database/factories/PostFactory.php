@@ -16,6 +16,7 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
+            'id' => 1,
             'title' => $this->faker->title(),
             'body' => $this->faker->realText(),
             'author_id' => (User::factory()->make())->id,
