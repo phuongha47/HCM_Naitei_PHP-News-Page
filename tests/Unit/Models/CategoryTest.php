@@ -44,10 +44,10 @@ class CategoryTest extends TestCase
     }
     public function testCategoryHasManyChildrens()
     {
-        $this->assertInstanceOf(HasMany::class, $this->category->childrens());
+        $this->assertInstanceOf(HasMany::class, $this->category->children());
         //  Check foreignkey
-        $this->assertEquals("parent_id", $this->category->childrens()->getForeignKeyName());
+        $this->assertEquals("parent_id", $this->category->children()->getForeignKeyName());
         //  Posts related category
-        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->category->childrens);
+        $this->assertInstanceOf("Illuminate\Database\Eloquent\Collection", $this->category->children);
     }
 }
