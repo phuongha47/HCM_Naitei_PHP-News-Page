@@ -5,38 +5,33 @@ namespace Tests\Unit\Controllers;
 use Tests\TestCase;
 use App\Models\User;
 use App\Http\Controllers\Admin\UserController;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserAddRequest;
 use App\Http\Requests\UserEditRequest;
-use Illuminate\Support\Facades\Route;
 use Mockery;
 use Mockery\MockInterface;
-use App\Services\Web\UserService;
 use App\Repositories\User\UserRepository;
-use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 
 class UserControllerTest extends TestCase
 {
-    /**
-     * A basic unit test example.
-     *
-     * @return void
-     */
     public $mockObject;
     public $controller;
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->mockObject = Mockery::mock(UserRepository::class)->makePartial();
         $this->controller = new UserController($this->mockObject);
     }
-    
+
     public function tearDown(): void
     {
+        unset($this->controller);
         Mockery::close();
+        parent::tearDown();
     }
+
     //  test_show_list
     public function testIndexUserList()
     {
@@ -46,10 +41,10 @@ class UserControllerTest extends TestCase
             ->withNoArgs()
             ->andReturn($users);
         $response = $this->controller->index();
-        
+
         $this->assertEquals('admin.pages.listUser', $response->getName());
     }
-    
+
     //  test_return_form_create
     public function testCreateReturnsView()
     {
@@ -70,7 +65,7 @@ class UserControllerTest extends TestCase
 
         $this->assertEquals('admin.pages.editUser', $view->getName());
     }
-   
+
     //  test_store
     public function testStoreUser()
     {
@@ -87,11 +82,11 @@ class UserControllerTest extends TestCase
             ->andReturn($user);
             
         $response = $this->controller->store($user);
-        
+
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals(302, $response->getStatusCode());
     }
-    
+
     //  test_update
     public function testUpdateUser()
     {
@@ -109,7 +104,7 @@ class UserControllerTest extends TestCase
         $this->assertInstanceOf(RedirectResponse::class, $response);
         $this->assertEquals(302, $response->getStatusCode());
     }
-    
+
     //  test_delete
     public function testDeleteUser()
     {
@@ -119,10 +114,10 @@ class UserControllerTest extends TestCase
             ->with($user->id)
             ->andReturnNull();
         $response = $this->controller->destroy($user->id);
-        
+
         $this->assertEquals(302, $response->getStatusCode());
     }
-    
+
     //  test_password_hashed
     public function testPasswordWillBeHashed()
     {
@@ -137,7 +132,7 @@ class UserControllerTest extends TestCase
 
         $this->assertEquals('hashed', $password);
     }
-    
+
     //  test_email_varified
     public function testCheckUserEmailVerified()
     {

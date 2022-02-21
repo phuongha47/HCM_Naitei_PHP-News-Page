@@ -28,10 +28,10 @@ class CommentTest extends TestCase
 
     public function tearDown(): void
     {
+        unset($this->user);
+        unset($this->post);
+        unset($this->comment);
         parent::tearDown();
-        $this->user = null;
-        $this->post = null;
-        $this->comment = null;
     }
 
     public function testCommentBelongsToAnOwner()

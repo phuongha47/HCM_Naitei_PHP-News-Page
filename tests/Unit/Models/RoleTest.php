@@ -22,9 +22,9 @@ class RoleTest extends TestCase
 
     public function tearDown(): void
     {
+        unset($this->role);
+        unset($this->user);
         parent::tearDown();
-        $this->role = null;
-        $this->user = null;
     }
 
     public function testRoleHasManyUsers()

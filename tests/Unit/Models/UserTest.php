@@ -30,11 +30,11 @@ class UserTest extends TestCase
 
     public function tearDown(): void
     {
+        unset($this->role);
+        unset($this->user);
+        unset($this->comment);
+        unset($this->post);
         parent::tearDown();
-        $this->role = null;
-        $this->user = null;
-        $this->comment = null;
-        $this->post = null;
     }
 
     public function testUserBelongsToRole()

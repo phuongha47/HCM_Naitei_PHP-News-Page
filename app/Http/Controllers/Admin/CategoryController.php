@@ -9,34 +9,37 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AddCategoryRequest;
 use App\Http\Requests\AddSubCategoryRequest;
 use App\Http\Requests\EditCategoryRequest;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
 {
     private $controllerName = 'admin';
     protected $pathToView = 'admin.pages.';
     private $pathToUi = 'ui_resources/startbootstrap-sb-admin-2/';
+    protected $searchKeyWord = '';
+    protected $categoryRepo;
 
-    public function __construct()
+    public function __construct(CategoryRepositoryInterface $categoryRepo)
     {
         $this->middleware('auth');
         // Var want to share
         view()->share('controllerName', $this->controllerName);
         view()->share('pathToUi', $this->pathToUi);
         $this->limit = config('app.limit');
+        $this->categoryRepo = $categoryRepo;
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    
     public function index()
     {
-        $categories = Category::first();
-        $categories = $categories->load('posts')->paginate($this->limit);
+        $categories = $this->categoryRepo->index($paginateLimit=$this->limit);
 
         return view(
-            $this->pathToView . 'listCategory',
+            $this->pathToView . 'search_category',
             array_merge(
                 compact('categories'),
                 [
@@ -53,17 +56,13 @@ class CategoryController extends Controller
      */
     public function createSubCategory()
     {
-        $categoriesSub = DB::table('categories')
-            ->select('*')
-            ->whereNull('parent_id')
-            ->get();
+        $categoriesSub = $this->categoryRepo->getCategoriesSub();
 
         return view($this->pathToView . 'addSubCategory', compact(['categoriesSub']));
     }
 
     public function create()
     {
-
         return view($this->pathToView . 'addCategory');
     }
 
@@ -76,26 +75,21 @@ class CategoryController extends Controller
     public function storeSubCategory(AddSubCategoryRequest $request)
     {
         if (!is_null($request->parent_id)) {
-            $Category = Category::create($request->all());
+            $this->categoryRepo->create($request);
         }
 
         return redirect()->route('category.index');
     }
+
     public function storeCategory(AddCategoryRequest $request)
     {
         if (is_null($request->parent_id)) {
-            $Category = Category::create($request->all());
+            $this->categoryRepo->create($request);
         }
 
         return redirect()->route('category.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
@@ -109,12 +103,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
-        $categoriesSub = DB::table('categories')
-                    ->select('*')
-                    ->whereNull('parent_id')
-                    ->get();
-                    
+        $category = $this->categoryRepo->findOrFail($id);
+        $categoriesSub = $this->categoryRepo->getCategoriesSub();
+
         return view($this->pathToView . 'editCategory', compact(['category', 'categoriesSub']));
     }
 
@@ -125,19 +116,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
     public function update(EditCategoryRequest $request, $id)
     {
-        $category = Category::findOrFail($id);
-        //check parent for category
-        if ((is_null($category->parent_id)) && (is_null($request->parent_id))) {
-            $category->update($request->all());
-        } elseif ((!is_null($category->parent_id))//check parent for sub_category
-            && (!is_null($request->parent_id))
-            && ($category->id != $request->parent_id)) {
-            $category->update($request->all());
-        }
-       
+        $this->categoryRepo->update($id, $request);
+
         return redirect()->route('category.index');
     }
 
@@ -149,19 +131,8 @@ class CategoryController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $category = Category::findOrFail($id);
-        $category->delete();
+        $this->categoryRepo->delete($id);
 
         return redirect()->route('category.index');
-    }
-
-    public function search(Request $request)
-    {
-        $searchKeyWord = $request->input('search');
-        $categories = Category::where('name', 'LIKE', "%{$searchKeyWord}%")
-            ->orderBy('id', 'DESC')
-            ->paginate($this->limit);
-
-        return view($this->pathToView . 'listCategory', compact('categories', 'searchKeyWord'));
     }
 }
