@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
-class CategoryFactory extends Factory
+use App\Models\Post;
+class ImageFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,8 +15,7 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'parent_id' => rand(1,10),
+            'link' => $this->faker->url(),
         ];
     }
 }
