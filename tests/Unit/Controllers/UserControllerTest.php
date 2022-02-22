@@ -16,6 +16,7 @@ use App\Repositories\User\UserRepository;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserControllerTest extends TestCase
 {
@@ -32,9 +33,11 @@ class UserControllerTest extends TestCase
         $this->mockObject = Mockery::mock(UserRepository::class)->makePartial();
         $this->controller = new UserController($this->mockObject);
     }
-    
     public function tearDown(): void
     {
+        $this->controller = null;
+        $this->mockObject = null;
+        parent::tearDown();
         Mockery::close();
     }
     //  test_show_list
@@ -46,8 +49,20 @@ class UserControllerTest extends TestCase
             ->withNoArgs()
             ->andReturn($users);
         $response = $this->controller->index();
-        
+
         $this->assertEquals('admin.pages.listUser', $response->getName());
+    }
+    public function testIndexUserListFails()
+    {
+        $users = User::factory(5)->make();
+        $this->mockObject->shouldReceive('getAll')
+            ->times(1)
+            ->withNoArgs()
+            ->andThrow(new ModelNotFoundException);
+        $response = $this->controller->index();
+        
+        $this->assertEquals(route('post.index'), $response->getTargetUrl());
+        $this->assertInstanceOf(RedirectResponse::class, $response);
     }
     
     //  test_return_form_create
@@ -145,5 +160,19 @@ class UserControllerTest extends TestCase
         $user->email_verified_at = now();
 
         $this->assertTrue($user->hasVerifiedEmail());
+    }
+    
+    //  test_search
+    public function testCheckSearch()
+    {
+        $user = User::factory()->make();
+        $key = new Request(['user1']);
+        $response = $this->mockObject->shouldReceive('search')
+            ->times(1)
+            ->with($key)
+            ->andReturn($key, $user);
+        $view = $this->controller->search($key);
+
+        $this->assertEquals('admin.pages.listUser', $view->getName());
     }
 }
