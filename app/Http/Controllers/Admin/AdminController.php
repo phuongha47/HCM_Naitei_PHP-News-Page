@@ -27,14 +27,14 @@ class AdminController extends Controller
             ->orderBy('created_at', 'ASC')
             ->groupBy('date')
             ->get();
-        $datas = $days = $dates = array(0, 0, 0, 0, 0, 0, 0);
+        echo $posts;
+        $datas = $days = [0, 0, 0, 0, 0, 0, 0];
         
         foreach($posts as $index => $post)
         {
-            $datas[$index] = $post["count"];
-            $days[$index] = $post["date"];
-            $paymentDate = '2021/05/06';
-            $days[$index] = $days[$index]."\n". Carbon::createFromFormat('Y-m-d', $post['date'])->format('l');
+            $datas[$index] = $post['count'];
+            $days[$index] = $post['date'];
+            $days[$index] = $days[$index] . "\n" . Carbon::createFromFormat('Y-m-d', $post['date'])->format('l');
         }
         
         return view($this->pathToView.'dashboard', compact('datas', 'days'));
