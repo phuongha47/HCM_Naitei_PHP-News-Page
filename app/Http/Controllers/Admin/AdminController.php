@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Post;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -20,6 +23,19 @@ class AdminController extends Controller
 
     public function index()
     {
-        return view('admin.pages.dashboard');
+        $posts = Post::selectRaw('DATE(created_at) as date, count(id) as count')
+            ->whereBetween('created_at', [now()->subDays(7), now()])
+            ->orderBy('created_at', 'ASC')
+            ->groupBy('date')
+            ->get();
+        $datas = $days = [0, 0, 0, 0, 0, 0, 0];
+        
+        foreach ($posts as $index => $post) {
+            $datas[$index] = $post['count'];
+            $days[$index] = $post['date'];
+            $days[$index] = $days[$index] . "\n" . Carbon::createFromFormat('Y-m-d', $post['date'])->format('l');
+        }
+        
+        return view($this->pathToView.'dashboard', compact('datas', 'days'));
     }
 }
