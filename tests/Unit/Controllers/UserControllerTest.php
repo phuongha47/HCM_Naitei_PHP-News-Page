@@ -16,6 +16,7 @@ use App\Repositories\User\UserRepository;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserControllerTest extends TestCase
 {
@@ -37,6 +38,7 @@ class UserControllerTest extends TestCase
     {
         $this->controller = Null;
         $this->mockObject = Null;
+        parent::tearDown();
         Mockery::close();
     }
     //  test_show_list
@@ -46,10 +48,24 @@ class UserControllerTest extends TestCase
         $this->mockObject->shouldReceive('getAll')
             ->times(1)
             ->withNoArgs()
-            ->andReturn($users);
+            ->andThrow(new ModelNotFoundException);
         $response = $this->controller->index();
-        
-        $this->assertEquals('admin.pages.listUser', $response->getName());
+        $this->assertEquals('Found', $response->redirectPath());
+        $this->assertInstanceOf(RedirectResponse::class, $response);
+    }
+    public function testIndexUserListFails()
+    {
+        $users = User::factory(5)->make();
+        $this->mockObject->shouldReceive('getAll')
+            ->times(1)
+            ->withNoArgs()
+            ->andThrow(new ModelNotFoundException);
+        // $this->withExceptionHandling();        
+        $response = $this->controller->index();
+        // $this->withoutExceptionHandling();
+        // $response = $this->get('/');
+        // $this->assertViewHas('errorMsg', 'Please enter your email address.');
+        // $this->assertInstanceOf(RedirectResponse::class, $response);
     }
     
     //  test_return_form_create
@@ -152,11 +168,12 @@ class UserControllerTest extends TestCase
     //  test_search
     public function testCheckSearch()
     {
+        $user = User::factory()->make();
         $key = new Request(['user1']);
         $response = $this->mockObject->shouldReceive('search')
             ->times(1)
             ->with($key)
-            ->andReturn();
+            ->andReturn($key, $user);
         $view = $this->controller->search($key);
 
         $this->assertEquals('admin.pages.listUser', $view->getName());

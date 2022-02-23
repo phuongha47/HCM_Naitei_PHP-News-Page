@@ -2,6 +2,7 @@
 
 @section('pageTitle', 'Dashboard')
 @section('content')
+
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -17,5 +18,60 @@
         <span class="text">{{ __('messages.goToHome') }}</span>
     </a>
 
+    <div class="chart">
+        <canvas id="barChart"></canvas>
+    </div>
+    <script>
+    $(function() {
+        var datas = <?php echo json_encode($datas); ?>;
+        var days = <?php echo json_encode($days); ?>;
+        var barCanvas = $("#barChart");
+        var barChart = new Chart(barCanvas, {
+            type: 'bar',
+            data: {
+                labels: days,
+                datasets: [{
+                    label: 'Count posts',
+                    data: datas,
+                    backgroundColor: ['Red', 'MediumTurquoise', 'Coral', 'Yellow',
+                        'Chartreuse',
+                        'DeepSkyBlue',
+                        'LightPink',
+                    ]
+                }]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: 'Last week\'s posts, 2022',
+                    fontSize: 25
+                },
+                legend: {
+                    position: 'right',
+                },
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Count',
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Days',
+                        }
+                    }]
+                }
+            }
+        });
+
+    })
+    </script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js">
+    </script>
 </div>
 @endsection

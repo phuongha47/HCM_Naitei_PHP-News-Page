@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
         DB::table('roles')->insert([
             'id' => "1",
             'name' => "Admin",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
 
         DB::table('roles')->insert([
             'id' => "2",
             'name' => "User",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         for ($i = 0; $i < 10; $i++){
         DB::table('users')->insert([
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'email' => Str::random(10).'@gmail.com',
             'password' => Hash::make('password'),
             'role_id' => "1",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         }
         for ($i = 10; $i < 20; $i++){
@@ -43,89 +43,89 @@ class DatabaseSeeder extends Seeder
                 'email' => Str::random(10).'@gmail.com',
                 'password' => Hash::make('password'),
                 'role_id' => "2",
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now()->format('Y-m-d'),
             ]);
         }
        
         DB::table('categories')->insert([
             'name' => "WORLD",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "BUSINESS",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "TRAVEL",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "SCIENCE",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "VIDEO",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "HEALTH",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
 
         DB::table('categories')->insert([
             'name' => "SPORTS",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
 
         DB::table('categories')->insert([
             'name' => "TECH",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
 
         DB::table('categories')->insert([
             'name' => "MILITARY",
             'parent_id' => "1",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "POLITICS & GOVERMENT",
             'parent_id' => "1",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "STATISTICS",
             'parent_id' => "1",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "INTERNATIONAL",
             'parent_id' => "2",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "STOCK",
             'parent_id' => "2",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "ENTERPRISE",
             'parent_id' => "2",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "PRODUCT",
             'parent_id' => "8",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "ADVISORY",
             'parent_id' => "6",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         DB::table('categories')->insert([
             'name' => "NUTRITION",
             'parent_id' => "6",
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::now()->format('Y-m-d'),
         ]);
         for ($i = 1; $i < 5; $i++){
             DB::table('posts')->insert([
@@ -145,7 +145,7 @@ class DatabaseSeeder extends Seeder
                 She scooped the Academy Award for Best Actress in 2004 for her role in “Monster,” and earned nominations in 2006 for “North Country,” and earlier this year for her portrayal of Megyn Kelly in “Bombshell.”",
                 'category_id' => "10",
                 'author_id' => "1",
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now()->format('Y-m-d'),
             ]);
         }
         for ($i = 5; $i < 8; $i++){
@@ -157,7 +157,91 @@ class DatabaseSeeder extends Seeder
                 The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
                 'category_id' => "11",
                 'author_id' => "2",
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now()->format('Y-m-d'),
+            ]);
+        }
+        for ($i = 5; $i < 8; $i++){
+            DB::table('posts')->insert([
+                'title' => "The Republican Party is enabling Trump's politics of violence".$i,
+                'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
+
+                The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
+                The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
+                'category_id' => "11",
+                'author_id' => "2",
+                'created_at' => '2022-02-19',
+            ]);
+        }
+        for ($i = 5; $i < 11; $i++){
+            DB::table('posts')->insert([
+                'title' => "The Republican Party is enabling Trump's politics of violence".$i,
+                'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
+
+                The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
+                The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
+                'category_id' => "11",
+                'author_id' => "2",
+                'created_at' => '2022-02-17',
+            ]);
+        }
+        for ($i = 5; $i < 21; $i++){
+            DB::table('posts')->insert([
+                'title' => "The Republican Party is enabling Trump's politics of violence".$i,
+                'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
+
+                The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
+                The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
+                'category_id' => "11",
+                'author_id' => "2",
+                'created_at' => '2022-02-20',
+            ]);
+        }
+        for ($i = 5; $i < 13; $i++){
+            DB::table('posts')->insert([
+                'title' => "The Republican Party is enabling Trump's politics of violence".$i,
+                'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
+
+                The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
+                The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
+                'category_id' => "11",
+                'author_id' => "2",
+                'created_at' => '2022-02-22',
+            ]);
+        }
+        for ($i = 5; $i < 13; $i++){
+            DB::table('posts')->insert([
+                'title' => "The Republican Party is enabling Trump's politics of violence".$i,
+                'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
+
+                The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
+                The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
+                'category_id' => "11",
+                'author_id' => "2",
+                'created_at' => '2022-02-18',
+            ]);
+        }
+        for ($i = 5; $i < 13; $i++){
+            DB::table('posts')->insert([
+                'title' => "The Republican Party is enabling Trump's politics of violence".$i,
+                'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
+
+                The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
+                The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
+                'category_id' => "11",
+                'author_id' => "2",
+                'created_at' => '2022-02-16',
+            ]);
+        }
+        for ($i = 5; $i < 16; $i++){
+            DB::table('posts')->insert([
+                'title' => "The Republican Party is enabling Trump's politics of violence".$i,
+                'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
+
+                The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
+                The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
+                'category_id' => "11",
+                'author_id' => "2",
+                'created_at' => '2022-02-21',
             ]);
         }
         for ($i = 8; $i < 10; $i++){
@@ -169,7 +253,7 @@ class DatabaseSeeder extends Seeder
                 The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
                 'category_id' => "12",
                 'author_id' => "2",
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now()->format('Y-m-d'),
             ]);
         }
         for ($i = 10; $i < 15; $i++){
@@ -181,7 +265,7 @@ class DatabaseSeeder extends Seeder
                 The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
                 'category_id' => "9",
                 'author_id' => "2",
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now()->format('Y-m-d'),
             ]);
         }
         for ($i = 15; $i < 18; $i++){
@@ -193,7 +277,7 @@ class DatabaseSeeder extends Seeder
                 The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
                 'category_id' => "10",
                 'author_id' => "2",
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now()->format('Y-m-d'),
             ]);
         }
         for ($i = 18; $i < 22; $i++){
@@ -205,7 +289,7 @@ class DatabaseSeeder extends Seeder
                 The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
                 'category_id' => "16",
                 'author_id' => "2",
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'created_at' => Carbon::now()->format('Y-m-d'),
             ]);
         }
         for ($i = 22; $i < 25; $i++){
