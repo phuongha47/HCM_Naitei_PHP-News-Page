@@ -217,6 +217,30 @@ class DatabaseSeeder extends Seeder
                 The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
                 'category_id' => "11",
                 'author_id' => "2",
+                'created_at' => '2022-02-23',
+            ]);
+        }
+        for ($i = 5; $i < 13; $i++){
+            DB::table('posts')->insert([
+                'title' => "The Republican Party is enabling Trump's politics of violence".$i,
+                'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
+
+                The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
+                The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
+                'category_id' => "11",
+                'author_id' => "2",
+                'created_at' => '2022-02-24',
+            ]);
+        }
+        for ($i = 5; $i < 13; $i++){
+            DB::table('posts')->insert([
+                'title' => "The Republican Party is enabling Trump's politics of violence".$i,
+                'body' => "(CNN)The Republican Party is ever closer to the destination to which it has long been headed under former President Donald Trump -- the legitimization of violence as a form of political expression.
+
+                The Republican National Committee's censure of GOP Reps. Liz Cheney and Adam Kinzinger for probing the legitimate political discourse of the January 6 insurrection enshrined that principle in the party's policy dogma. The move on Friday underscored the untethered extremism of large sections of one of America's great political parties and the still malignant, dominant influence of the ex-President, who is ready for action with a $122 million war chest.
+                The RNC's declaration coincided with the release of new video by the Department of Justice showing the horrific truth of the insurrection -- a Trump mob, high on his election lies, beating up police officers and vowing to drag lawmakers through the streets. But the RNC's authoritarian was at odds with some anti-Trump stirrings elsewhere in the party, most noticeably from ex-Vice President Mike Pence, who criticized his ex-boss' demand that he steal the election by subverting the Electoral College count last year as un-American.",
+                'category_id' => "11",
+                'author_id' => "2",
                 'created_at' => '2022-02-18',
             ]);
         }

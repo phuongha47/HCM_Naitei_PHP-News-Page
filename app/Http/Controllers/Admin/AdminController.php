@@ -27,7 +27,6 @@ class AdminController extends Controller
             ->orderBy('created_at', 'ASC')
             ->groupBy('date')
             ->get();
-        echo $posts;
         $datas = $days = [0, 0, 0, 0, 0, 0, 0];
         
         foreach($posts as $index => $post)
