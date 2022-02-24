@@ -23,7 +23,7 @@
                     <div class="ml-3 contents">
                         <h2><a href="{{ route('userPost.show', $post->id) }}">{{ $post->title }}</a></h2>
                         <p class="mb-3">
-                            {{ \Illuminate\Support\Str::limit(strip_tags($post->body), $maxBody, $end='...')}}</p>
+                            {!! \Illuminate\Support\Str::limit(strip_tags($post->body), $maxBody, $end='...') !!}</p>
                     </div>
                 </div>
                 @endforeach

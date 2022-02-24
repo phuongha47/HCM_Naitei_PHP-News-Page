@@ -16,6 +16,7 @@ class UserCategoryController extends Controller
     protected $imgPosts;
     protected $categoriesWithChildren;
     protected $limit;
+    protected $maxBody;
 
 
     /**
@@ -26,6 +27,7 @@ class UserCategoryController extends Controller
     public function __construct()
     {
         $this->limit = config('app.limit');
+        $this->maxBody = config('model.posts.maxBody');
         $this->imgPosts = Image::where('imageable_type', Post::class)->get();
         $this->categoriesWithChildren = Category::with('children')->whereNull('parent_id')->get();
     }
@@ -75,11 +77,12 @@ class UserCategoryController extends Controller
                     [
                         'searchKeyWord' => $this->searchKeyWord,
                         'categoriesWithChildren' => $this->categoriesWithChildren,
+                        'maxBody' => $this->maxBody,
                     ]
                 )
             );
         }
-        
+
         return view(
             $this->pathToView . 'detailSubCategory',
             array_merge(
@@ -88,6 +91,7 @@ class UserCategoryController extends Controller
                     'searchKeyWord' => $this->searchKeyWord,
                     'imgPosts' => $this->imgPosts,
                     'categoriesWithChildren' => $this->categoriesWithChildren,
+                    'maxBody' => $this->maxBody,
                 ]
             )
         );
@@ -119,6 +123,7 @@ class UserCategoryController extends Controller
                     'searchKeyWord' => $this->searchKeyWord,
                     'imgPosts' => $this->imgPosts,
                     'categoriesWithChildren' => $this->categoriesWithChildren,
+                    'maxBody' => $this->maxBody,
                 ]
             )
         );

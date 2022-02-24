@@ -15,7 +15,6 @@ class HomeController extends Controller
     protected $imgPosts;
     protected $categoriesWithChildren;
     protected $limit;
-    protected $maxBody;
 
 
     /**

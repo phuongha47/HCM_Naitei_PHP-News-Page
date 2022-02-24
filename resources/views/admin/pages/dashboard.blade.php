@@ -2,7 +2,7 @@
 
 @section('pageTitle', 'Dashboard')
 @section('content')
-<link rel="stylesheet" href="public\chart.css">
+<link rel="stylesheet" href="\resouce\meranda-master\css\chart.css">
 <div class="container-fluid">
 
     <!-- Page Heading -->

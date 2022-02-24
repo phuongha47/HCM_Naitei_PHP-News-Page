@@ -1,20 +1,19 @@
-@extends('admin.master_layout')
-
-@section('pageTitle', 'Add Post')
-
 <head>
     <meta charset="UTF-8">
-    <script src={{ asset("/resouce/summernote-main/summernote-main/jquery-3.5.1.min.js") }}></script>
-    <script src={{ asset("/resouce/summernote-main/summernote-main/popper.min.js") }}></script>
+    <title>{{ __('messages.adminAddPost') }}</title>
+    <script src={{ "/resouce/summernote-main/summernote-main/jquery-3.5.1.min.js" }}></script>
+    <script src={{ "/resouce/summernote-main/summernote-main/popper.min.js" }}></script>
 
-    <link rel="stylesheet" href={{ asset("/resouce/summernote-main/summernote-main/bootstrap.min.css" ) }}>
-    <script src={{ asset("/resouce/summernote-main/summernote-main/bootstrap.min.js" ) }}></script>
+    <link rel="stylesheet" href={{ "/resouce/summernote-main/summernote-main/bootstrap.min.css" }}>
+    <script src={{ "/resouce/summernote-main/summernote-main/bootstrap.min.js" }}></script>
 
-    <link href={{ asset("/resouce/summernote-main/summernote-main/summernote-bs4.min.css") }} rel="stylesheet">
-    <script src={{ asset("/resouce/summernote-main/summernote-main/summernote-bs4.min.js") }}></script>
+    <link href={{ "/resouce/summernote-main/summernote-main/summernote-bs4.min.css" }} rel="stylesheet">
+    <script src={{ "/resouce/summernote-main/summernote-main/summernote-bs4.min.js" }}></script>
 </head>
-@section('content')
+
 <div class="container-fluid">
+
+    <a href="{{ route('admin.index') }}" class="btn btn-dark m-3">{{ __('messages.back') }}</a>
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -90,6 +89,4 @@
 </div>
 <!-- partial:index.partial.html -->
 <!-- partial -->
-<script type="text/javascript" src={{ asset("/resouce/summernote-main/summernote-main/script.js") }}></script>
-
-@endsection
+<script type="text/javascript" src={{ "/resouce/summernote-main/summernote-main/script.js" }}></script>

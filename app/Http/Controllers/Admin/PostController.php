@@ -17,6 +17,8 @@ class PostController extends Controller
     protected $pathToView = 'admin.pages.';
     protected $pathToUi = 'ui_resources/startbootstrap-sb-admin-2/';
     protected $imgPosts;
+    protected $maxBody;
+
     /**
      * Display a listing of the resource.
      *
@@ -28,6 +30,7 @@ class PostController extends Controller
         view()->share('controller_name', $this->controller_name);
         view()->share('pathToUi', $this->pathToUi);
         $this->limit = config('app.limit');
+        $this->maxBody = config('model.posts.maxBody');
         $this->imgPosts = Image::where('imageable_type', Post::class)->get();
     }
     public function index()
@@ -43,6 +46,7 @@ class PostController extends Controller
                 compact('posts'),
                 [
                     'searchKeyWord' => $this->searchKeyWord,
+                    'maxBody' => $this->maxBody,
                 ]
             )
         );

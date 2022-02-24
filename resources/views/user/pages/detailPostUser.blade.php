@@ -51,13 +51,13 @@
                     <img src="{{ url('storage/app/images/'.$img->link) }}" alt="" title="" />
 
                     <a href="{{ route('userPost.show', $post->id) }}" class="mt-3 ml-3"><img
-                            style="width:100px; height:100px" src="{{ $img->link }}" alt=""></a>
+                            style="width:100px; height:100px" src="{{ url('storage/images/'.$img->link) }}" alt=""></a>
                     @endif
                     @endforeach
                     <div class="contents">
                         <h2><a href="{{ route('userPost.show', $post->id) }}">{{ $post->title }}</a></h2>
                         <div class="post-meta">
-                            <span class="d-block">{{ \Illuminate\Support\Str::limit($post->body, 100, $end='...') }}in
+                            <span class="d-block">{{ \Illuminate\Support\Str::limit($post->body, 100, $end='...') }}
                             </span>
                         </div>
 

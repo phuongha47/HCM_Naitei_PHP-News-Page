@@ -56,7 +56,9 @@
                                                 </a>
                                             </td>
                                             <td class="col-7 text-left">
-                                                <p>{{ \Illuminate\Support\Str::limit($post->body, 150, $end='...') }}
+                                                <p>{!! \Illuminate\Support\Str::limit(strip_tags($post->body), $maxBody,
+                                                    $end='...')
+                                                    !!}
                                                 </p>
                                             </td>
                                             <td class="col-3">

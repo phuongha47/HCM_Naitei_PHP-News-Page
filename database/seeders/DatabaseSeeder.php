@@ -400,7 +400,7 @@ class DatabaseSeeder extends Seeder
         //         'created_at' => Carbon::now()->format('Y-m-d H:i'),
         //     ]);
         // }
-        for ($i = 1; $i < 42; $i++){
+        for ($i = 1; $i < 120; $i++){
             DB::table('images')->insert([
                 'imageable_type' => "App\Models\Post",
                 'imageable_id' => $i,

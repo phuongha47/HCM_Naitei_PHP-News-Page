@@ -14,6 +14,8 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     protected $limit;
     protected $categoriesWithChildren;
+    protected $maxBody;
+
     /**
      * Display a listing of the resource.
      *
@@ -23,5 +25,6 @@ class Controller extends BaseController
     public function __construct()
     {
         $this->limit = config('app.limit');
+        $this->maxBody = config('model.posts.maxBody');
     }
 }
