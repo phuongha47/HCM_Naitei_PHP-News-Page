@@ -404,7 +404,7 @@ class DatabaseSeeder extends Seeder
             DB::table('images')->insert([
                 'imageable_type' => "App\Models\Post",
                 'imageable_id' => $i,
-                'link' => '1644385778.jpg',
+                'link' => '1644385472.jpg',
                 'created_at' => Carbon::now()->format('Y-m-d H:i'),
             ]);
         }
