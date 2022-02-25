@@ -33,9 +33,9 @@
                 datasets: [{
                     label: 'Count posts',
                     data: datas,
-                    backgroundColor: ['Red', 'MediumTurquoise', 'Coral', 'Yellow',
-                        'Chartreuse',
-                        'DeepSkyBlue',
+                    backgroundColor: ['LightPink', 'LightPink', 'LightPink', 'LightPink',
+                        'LightPink',
+                        'LightPink',
                         'LightPink',
                     ]
                 }]
