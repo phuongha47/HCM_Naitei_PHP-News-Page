@@ -27,12 +27,19 @@ class UserController extends Controller
      */
     public function __construct(UserRepositoryInterface $userRepo)
     {
+        $this->middleware('auth');
         // Var want to share
         view()->share('controllerName', $this->controllerName);
         view()->share('pathToUi', $this->pathToUi);
         $this->limit = config('app.limit');
         $this->userRepo = $userRepo;
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         try {
@@ -40,6 +47,7 @@ class UserController extends Controller
         } catch (ModelNotFoundException $exception) {
             return redirect()->route('post.index')->withError($exception->getMessage())->withInput();
         }
+
         return view(
             $this->pathToView . 'listUser',
             array_merge(
@@ -70,7 +78,7 @@ class UserController extends Controller
     {
         $password = Hash::make($request->password);
         $user = $this->userRepo->create($request);
-        
+
         return redirect()->route('user.index');
     }
 
@@ -82,7 +90,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view($this->pathToView . 'viewProfile', compact(['user']));
     }
 
     /**
@@ -108,7 +118,7 @@ class UserController extends Controller
     public function update(UserEditRequest $request, $id)
     {
         $this->userRepo->update($id, $request);
-        
+
         return redirect()->route('user.index');
     }
 
@@ -124,12 +134,13 @@ class UserController extends Controller
 
         return redirect()->route('user.index');
     }
-    
+
     public function search(Request $request)
     {
         $results = $this->userRepo->search($request);
         $users = $results[0];
         $searchKeyWord = $results[1];
+
         return view($this->pathToView . 'listUser', compact('users', 'searchKeyWord'));
     }
 }
