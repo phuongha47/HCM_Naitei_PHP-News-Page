@@ -1,10 +1,11 @@
 <?php
-namespace App\Repositories\User;
+namespace App\Repositories\Admin;
 
 use App\Repositories\BaseRepository;
 use App\Models\Post;
 use App\Http\Requests\UserAddRequest;
 use App\Http\Requests\UserEditRequest;
+use Carbon\Carbon;
 
 class AdminRepository extends BaseRepository implements AdminRepositoryInterface
 {
@@ -12,7 +13,7 @@ class AdminRepository extends BaseRepository implements AdminRepositoryInterface
     {
         return Post::class;
     }
-    public function index()
+    public function chartCountPosts()
     {
         $posts = Post::selectRaw('DATE(created_at) as date, count(id) as count')
             ->whereBetween('created_at', [now()->subDays(7), now()])
@@ -27,6 +28,9 @@ class AdminRepository extends BaseRepository implements AdminRepositoryInterface
             $days[$index] = $days[$index] . "\n" . Carbon::createFromFormat('Y-m-d', $post['date'])->format('l');
         }
         
-        return [$datas, $days];
+        return [
+                'datas' => $datas,
+                'days' => $days,
+            ];
     }
 }
