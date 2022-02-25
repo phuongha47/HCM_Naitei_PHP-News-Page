@@ -26,8 +26,8 @@ class AdminController extends Controller
     public function index()
     {
         $posts = $this->adminRepo->chartCountPosts();
-        $datas = $posts[0];
-        $days = $posts[1];
+        $datas = $posts['datas'];
+        $days = $posts['days'];
 
         return view($this->pathToView.'dashboard', compact('datas', 'days'));
     }

@@ -15,7 +15,7 @@ class AdminRepository extends BaseRepository implements AdminRepositoryInterface
     }
     public function chartCountPosts()
     {
-        $posts = Post::selectRaw('DATE(created_at) as date, count(id) as count')
+        $posts = $this->model::selectRaw('DATE(created_at) as date, count(id) as count')
             ->whereBetween('created_at', [now()->subDays(7), now()])
             ->orderBy('created_at', 'ASC')
             ->groupBy('date')
@@ -31,6 +31,6 @@ class AdminRepository extends BaseRepository implements AdminRepositoryInterface
         return [
                 'datas' => $datas,
                 'days' => $days,
-            ];
+                ];
     }
 }
